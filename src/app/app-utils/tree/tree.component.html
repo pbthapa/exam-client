@@ -1,0 +1,26 @@
+<ul *ngFor="let parent of tree">
+    <input type="checkbox" (click)="handleCheckEvent($event)">
+    <i class="fa fa-caret-right" (click)="handleToggleEvent($event)">
+    </i> {{ parent.nodeName }}
+    <li>
+        <ul *ngFor="let child1 of parent.children">
+            <input type="checkbox">
+            <i class="fa fa-caret-right" (click)="toggle($event)">
+            </i>{{ child1.nodeName }}
+            <li>
+                <ul *ngFor="let child2 of child1.children">
+                    <input type="checkbox">
+                    <i class="fa fa-caret-right" (click)="toggle($event)">
+                    </i>{{ child2.nodeName }}
+                    <li>
+                        <ul *ngFor="let child3 of child2.children">
+                            <li>
+                                {{ child3.nodeName }}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>

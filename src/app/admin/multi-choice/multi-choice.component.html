@@ -1,0 +1,179 @@
+<div class="content">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#addQuestionModel">
+                Add Question
+            </button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <select class="form-control" [formControl]="subjectFilter" (change)="onSubjectChangeShowQuestion($event)">
+                    <option [value]="undefined">--Select Subject--</option>
+                    <option *ngFor="let option of subjects;" [value]="option.id">
+                        {{ option.subject }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-lg-12" [hidden]="hideQuestionList">
+                <div *ngFor="let question of questions; let i = index;" style="padding-top: 0.3em;">
+                    <div class="card" style="padding: 5px;">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>
+                                    <h6>{{ i + 1 }}. {{ question.question }} [Difficulty: {{ question.level }}]</h6>
+                                </label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label [ngClass]="question.correctOption == 'Option A'? 'right':'wrong'">A. {{ question.optionA }}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label [ngClass]="question.correctOption == 'Option B'? 'right':'wrong'">B. {{ question.optionB }}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label [ngClass]="question.correctOption == 'Option C'? 'right':'wrong'">C. {{ question.optionC }}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label [ngClass]="question.correctOption == 'Option D'? 'right':'wrong'">D. {{ question.optionD }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The modal -->
+    <div class="modal fade" id="addQuestionModel" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalLabelSmall">Add Question</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form [formGroup]="questionForm">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="subject">Subject Area</label>
+                                        <select class="form-control" formControlName="subject" (change)="onSubjectChange($event)">
+                                            <option [value]="undefined">--Select Subject--</option>
+                                            <option *ngFor="let option of subjects;" [value]="option.id">
+                                                {{ option.subject }}
+                                            </option>
+                                        </select>
+                                        <span class="error-msg" *ngIf="!questionForm.get('subject').valid && questionForm.get('subject').touched">
+                                            <span *ngIf="questionForm.get('subject').errors['required']">Select subject area</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="level">Difficulty</label>
+                                        <select class="form-control" formControlName="level">
+                                            <option [value]="undefined">--Select Difficulty--</option>
+                                            <option *ngFor="let option of levels;" [value]="option">
+                                                {{ option }}
+                                            </option>
+                                        </select>
+                                        <span class="error-msg" *ngIf="!questionForm.get('level').valid && questionForm.get('level').touched">
+                                            <span *ngIf="questionForm.get('level').errors['required']">Field is required</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="questionName">Question</label>
+                                        <input type="text" id="questionName" formControlName="questionName" class="form-control">
+                                        <span *ngIf="!questionForm.get('questionName').valid && questionForm.get('questionName').touched" class="error-msg">
+                                            <span *ngIf="questionForm.get('questionName').errors['required']">Field is required</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="optionA">Option A</label>
+                                        <input type="text" id="optionA" formControlName="optionA" class="form-control">
+                                        <span class="error-msg" *ngIf="!questionForm.get('optionA').valid && questionForm.get('optionA').touched">
+                                            <span *ngIf="questionForm.get('optionA').errors['required']">Field is required</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="optionB">Option B</label>
+                                        <input type="text" id="optionB" formControlName="optionB" class="form-control">
+                                        <span class="error-msg" *ngIf="!questionForm.get('optionB').valid && questionForm.get('optionB').touched">
+                                            <span *ngIf="questionForm.get('optionB').errors['required']">Field is required</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="optionC">Option C</label>
+                                        <input type="text" id="optionC" formControlName="optionC" class="form-control">
+                                        <span class="error-msg" *ngIf="!questionForm.get('optionC').valid && questionForm.get('optionC').touched">
+                                            <span *ngIf="questionForm.get('optionC').errors['required']">Field is required</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="optionD">Option D</label>
+                                        <input type="text" id="optionD" formControlName="optionD" class="form-control">
+                                        <span class="error-msg" *ngIf="!questionForm.get('optionD').valid && questionForm.get('optionD').touched">
+                                            <span *ngIf="questionForm.get('optionD').errors['required']">Field is required</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="correctOption">Correct Option</label>
+                                        <select class="form-control" formControlName="correctOption">
+                                            <option [value]="undefined">--Select Option--</option>
+                                            <option *ngFor="let option of options" [value]="option">
+                                                {{ option }}
+                                            </option>
+                                        </select>
+                                        <span class="error-msg" *ngIf="!questionForm.get('correctOption').valid && questionForm.get('correctOption').touched">
+                                            <span *ngIf="questionForm.get('correctOption').errors['required']">Select correct option</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="active">Active</label>
+                                        <div>
+                                            <input type="checkbox" id="active" formControlName="active" class="form-check-input-lg">
+                                            <span class="error-msg" *ngIf="!questionForm.get('active').valid && questionForm.get('active').touched">
+                                                <span *ngIf="questionForm.get('active').errors['required']">Field is required</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <button (click)="onSubmit()" class="btn btn-primary" [disabled]="!questionForm.valid">Submit</button>
+                                    <button (click)="setFields()" class="btn btn-secondary">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="box">
+        <h6>Multiple-Choice Question</h6>
+    </div> -->

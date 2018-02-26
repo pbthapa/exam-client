@@ -1,0 +1,12 @@
+{
+  "realm": "lis-exam-realm",
+  "auth-server-url": "http://localhost:8080/auth",
+  "ssl-required": "none",
+  "resource": "lis-exam-client",
+  "credentials": {
+    "secret": "61618126-a015-4bb6-9236-944a0ab3b6ff"
+  },
+  "realm-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAljhLHAy+hCOcZLLbEp/nPVJvXwlRmjMQx7vJiF8LMfHRt5hjLdINYToqhkhgmmclNsO6RFMiWmR26lUdNoiaIoz+QAoGTVTxSCgeJHB/5LC7bqS91tItcYdbnaYrPc89dIhzeRGiOjL5amwShSlhfx0Ja4TJnL+aKEVrq9JZ4Hei6eWp0xO2xJAr7Ytg6B4mwp37Akj+nSCj89cCGpeCzl+B3eqbK1cmm/Ckj2B1Au4UXc/GPco7oSDsstBDtIt/8MFXtb/BxOIYe7zf/WW4YqJuz6IXZHbRjWcp0fsiHjq4DF6WGJXviJ4ilgf5Z0RE1UzLrc847sEnBN8z+OKBDQIDAQAB",
+  "confidential-port": 0,
+  "policy-enforcer": {}
+}

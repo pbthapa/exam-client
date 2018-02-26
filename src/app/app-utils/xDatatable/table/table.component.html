@@ -1,0 +1,76 @@
+    <!-- <div class="ui secondary menu" *ngIf="options.search">
+        <div class="ui search">
+            <div class="ui icon input">
+                <input class="form-control" type="text" placeholder="search" [(ngModel)]="searchQuery" (keyup)="keyUp.next($event)">
+                <i class="search icon"></i>
+            </div>
+        </div>
+        <div class="item">
+            <i *ngIf="options.download.xls" (click)="downloadXls()" class="fa fa-download" style="padding-top:8px;cursor:pointer;" aria-hidden="true"></i>
+        </div>
+
+        <div class="right menu">
+            <div class="ui compact menu">
+                <div class="ui simple dropdown item">
+                    Search By: {{searchBy!=null?searchBy.name:'search'}}
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" (click)="searchByParam(option)" *ngFor="let option of getSearchableColumns()">
+                            {{option.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="container">
+        <table class="table table-sm table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th (click)="sort(col)" [ngClass]="{'pointer':col.sort.enabled}" 
+                    *ngFor="let col of options.columns" scope="row">{{col.name}}
+                        <i *ngIf="col.sort.enabled" class="sort-column-icon fa" 
+                        [ngClass]="{'fa-sort-asc':col.sort.status == 'asc','fa-sort-desc':col.sort.status == 'desc'}"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody *ngIf="ready">
+                <tr *ngFor="let row of pageRows; let i=index;" scope="row">
+                    <td htmlbind [col]="col" [row]="row" (click)="onRowClick(row);" 
+                    (fire)="onEventFire($event);" #ref *ngFor="let col of options.columns">
+                        {{resolveColumnValue(row,col,i,ref)}} </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                        <select class="custom-select">
+                                {{options.pageSize}}
+                                <option *ngFor="let option of options.pageSizeOptions" 
+                                   (click)="setPageSize(option)">
+                                        {{option}}
+                                </option>
+                        </select>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous"
+                    [ngClass]="{'a-disabled':isFirstPage()}" 
+                    (click)="selectPage(currentPage-1,-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                    <a class="page-link" (click)="selectPage(page+1)" 
+                    [ngClass]="{'page-selected disable-event':isCurrentPage(page+1,0)}" 
+                    *ngFor="let page of getPages();let i=index;">{{page+1}}</a>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next" 
+                    [ngClass]="{'a-disabled':isLastPage()}" 
+                    (click)="selectPage(currentPage+1,1)">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+        </nav>
+    </div>

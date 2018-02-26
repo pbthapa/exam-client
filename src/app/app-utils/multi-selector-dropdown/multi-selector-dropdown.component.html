@@ -1,0 +1,29 @@
+<!-- <div (mouseleave)="showDropDown = false">
+    <button class="drop-toggle" (click)="showDropDown=!showDropDown">
+        <span *ngIf="_selectedDataList.length<=0">Select</span>
+        <span *ngIf="_selectedDataList.length>0">{{ _selectedDataList.join(', ') }}</span>
+        <i class="fa fa-angle-down"></i>
+    </button>
+    <div class="drop-show" *ngIf="showDropDown">
+        <label *ngFor="let data of list">
+            <input type="checkbox" [(ngModel)]="data.checked" (change)="getSelectedValue(data.id, data.name, data.checked )" /> {{ data.name }}
+        </label>
+    </div>
+</div> -->
+
+<div class="dropdown">
+    <button class="btn btn-teal dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <span *ngIf="_selectedDataList.length<=0">Select Subject Area</span>
+        <span *ngIf="_selectedDataList.length>0">{{ _selectedDataList.join(', ') }}</span>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <div *ngFor="let data of list">
+            <label class="dropdown-item">
+                <input type="checkbox" [(ngModel)]="data.checked" 
+                (change)="getSelectedValue(data.id, data.name, data.checked )" 
+                /> <span>{{ data.name }}</span>
+                </label>
+        </div>
+    </div>
+</div>
