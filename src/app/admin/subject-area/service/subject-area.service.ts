@@ -10,7 +10,8 @@ export class SubjectAreaService {
 
   public baseUrl = '/api/admin';
 
-  constructor(private _http: KeycloakHttp) { }
+  //constructor(private _http: KeycloakHttp) { }
+  constructor(private _http: Http) { }
 
   create(subject: Subject) {
     return this._http.post(this.baseUrl + '/create-subject-area', subject)

@@ -11,7 +11,8 @@ export class MultiChoiceService {
 
   private baseUrl = '/api/admin';
 
-  constructor(private _http: KeycloakHttp) { }
+  //constructor(private _http: KeycloakHttp) { }
+  constructor(private _http: Http) { }
 
   create(data: MultiChoiceModel) {
     return this._http.post(this.baseUrl + '/create-question', data)

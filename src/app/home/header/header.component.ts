@@ -18,11 +18,11 @@ export class HeaderComponent implements OnInit {
   loggedUsername: string = null;
 
   ngOnInit() {
-    this.loggedUsername = KeycloakService.getFullName();
+    //this.loggedUsername = KeycloakService.getFullName();
   }
 
   logout() {
-    KeycloakService.logout();
+    //KeycloakService.logout();
   }
 
   onSubmenuSelect(submenu) {

@@ -1,46 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+/* body {
+    margin-bottom: 60px;
+} */
+
+.jumbotron-plain {
+    background-color:transparent !important;
+}
+
+.jumbotron {
+    padding: 2em 2em;
+    border: 1px solid yellow;
+}
+
+#btn-orientation-right {
+    float: right;
+}
+
 .error-msg {
     color: red;
 }
-
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 30px;
-    line-height: 30px;
-    background-color: #f5f5f5;
-}
-
-.box {
-    border:2px solid rgb(0,165,175);
-}
-
-.box h6 {
-    background: rgb(0,165,175);
-    color:white;
-    padding:6px;
-}
-
-.box p {
-    color:#333;padding:6px;
-}
-
-.box {
-    -moz-border-radius-topright:5px;
-    -moz-border-radius-topleft:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-top-left-radius:5px;
-    padding-bottom: 10px;
-    -webkit-box-shadow: 3px 3px 3px 0px rgba(0,165,175,0.75);
-    -moz-box-shadow: 3px 3px 3px 0px rgba(0,165,175,0.75);
-    box-shadow: 3px 3px 3px 0px rgba(0,165,175,0.75);
-}
-
-.content {
-    padding-top: 1em;
-    padding-bottom: 3em;
-}	
 
 .right {
     color: green;
