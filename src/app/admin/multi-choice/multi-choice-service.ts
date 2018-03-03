@@ -1,3 +1,4 @@
+import { QuestionSetModel } from './../question-set/question-set.model';
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -67,6 +68,12 @@ export class MultiChoiceService {
     let options = new RequestOptions({ headers: headers });
     return this._http.post(this.baseUrl + "/questions-per-criteria/", filterData, options)
     .map(response => response.json())
+    .toPromise()
+    .catch(this.handleError);
+  }
+
+  createQuestionSet(data: QuestionSetModel) {
+    return this._http.post(this.baseUrl + '/create-question-set', data)
     .toPromise()
     .catch(this.handleError);
   }

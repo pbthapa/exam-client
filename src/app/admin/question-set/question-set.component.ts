@@ -6,6 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { Subject } from '../subject-area/model/subject.model';
 import { SubjectAreaService } from '../subject-area/service/subject-area.service';
+import { QuestionSetModel } from './question-set.model';
 
 @Component({
   selector: 'app-question-set',
@@ -32,7 +33,10 @@ export class QuestionSetComponent implements OnInit {
   setFields() {
     this.levels = ExamConstants.levels;
     this.questionSetForm = new FormGroup({
-      'difficultyLevels': new FormGroup({})
+      'difficultyLevels': new FormGroup({}),
+      'totalTime': new FormControl(null, Validators.required),
+      'totalMark': new FormControl(null, Validators.required),
+      'questionSetName': new FormControl(null, Validators.required)
     });
 
     this.levels.forEach(item => {
@@ -48,6 +52,20 @@ export class QuestionSetComponent implements OnInit {
    * submit question set
    */
   onSubmit() {
+    if(this.questionSetForm.valid && this.selectedQuestions.length > 0) {
+      //set model to create question set
+      const model = new QuestionSetModel(
+        this.questionSetForm.value['questionSetName'],
+        this.questionSetForm.value['totalTime'],
+        this.questionSetForm.value['totalMark'],
+        this.selectedQuestions
+      );
+      console.log(model);
+      this._questionService.createQuestionSet(model);
+      //this.setFields();
+    } else {
+      console.log("Try submitting form with correct details");
+    }
   }
 
   getSubjectAreaSelectList() {
@@ -68,7 +86,6 @@ export class QuestionSetComponent implements OnInit {
 
   onFilter() {
     if (this.selectedSubjectIds.length > 0) {
-      this.showContainer = true;
       let difficulty = this.questionSetForm.get('difficultyLevels').value;
       let selectedLevels: number[] = [];
 
@@ -89,7 +106,13 @@ export class QuestionSetComponent implements OnInit {
   }
 
   setQuestions(questions) {
-    this.questions = questions;
+    if(questions.length > 0) {
+      this.showContainer = true;
+      this.questions = questions;
+    } else {
+      this.questions = [];
+      this.showContainer = false;
+    }
   }
 
   setCheckedQuestion(ev, questionId) {
