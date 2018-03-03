@@ -12,7 +12,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <form [formGroup]="questionSetForm.controls['difficultyLevels']">
-                            <div *ngFor="let item of levels" style="padding: 0.7em; float:right;">
+                            <div *ngFor="let item of levels" style="padding: 0.7em; float:left;">
                                 <input type="checkbox" [formControlName]="item.key">
                                 <span>{{ item.value }}</span>
                             </div>
@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <table class="table">
+                            <table class="table table-sm table-striped">
                                 <thead>
                                     <th>S.No</th>
                                     <th>Subject</th>
@@ -51,10 +51,10 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let data of questions; let i=index;">
-                                        <td>{{ i+1 }}</td>
-                                        <td>{{ data.SubjectArea.subject }}</td>
-                                        <td>{{ data.question }}</td>
-                                        <td>
+                                        <td class="align-middle">{{ i+1 }}</td>
+                                        <td class="align-middle">{{ data.SubjectArea.subject }}</td>
+                                        <td class="align-middle">{{ data.question }}</td>
+                                        <td class="align-middle">
                                             <ul>
                                                 <li>A. {{ data.option_a }}</li>
                                                 <li>B. {{ data.option_b }}</li>
@@ -62,8 +62,8 @@
                                                 <li>D. {{ data.option_d }}</li>
                                             </ul>
                                         </td>
-                                        <td>{{ levels[data.level].value }}</td>
-                                        <td>
+                                        <td class="align-middle">{{ levels[data.level].value }}</td>
+                                        <td class="align-middle">
                                             <input type="checkbox" (click)="setCheckedQuestion($event, data.id)">
                                         </td>
                                     </tr>

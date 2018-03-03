@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from '../model/subject.model';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { KeycloakHttp } from '../../../keycloak/keycloak.http';
@@ -23,7 +23,10 @@ export class SubjectAreaService {
   }
 
   update(subject: Subject) {
-    return this._http.put(this.baseUrl + '/update-subject-area' + subject.id, JSON.stringify(subject))
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    return this._http.put(this.baseUrl + '/update-subject-area', JSON.stringify(subject), options)
     // .map(data => {
     //   alert(data);
     //   data.json();
@@ -33,7 +36,10 @@ export class SubjectAreaService {
   }
 
   delete(id: number) {
-    return this._http.delete(this.baseUrl + '/subject-area' + id)
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    return this._http.put(this.baseUrl + '/remove-subject-area', JSON.stringify({"id": id}), options)
     .map(data => data.json())
     .toPromise();
   }

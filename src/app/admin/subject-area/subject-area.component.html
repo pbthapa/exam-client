@@ -1,11 +1,12 @@
 <div class="jumbotron jumbotron-fluid jumbotron-plain">
   <div class="container">
     <h4 class="text-info">Subject Area Details</h4>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubjectModal" style="margin-bottom:10px;float:right;">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubjectModal" 
+      style="margin-bottom:10px;float:right;" (click)="setFields()">
       Add Subject Area
     </button>
     <!-- <xtable [options]="tableOptions" (event)="onCompleteApplicationClick($event)" [refresh]="refreshTable"></xtable> -->
-    <table class="table table-striped">
+    <table class="table table-sm table-striped">
       <thead>
         <th>S.No</th>
         <th>Subject</th>
@@ -14,19 +15,19 @@
       </thead>
       <tbody>
         <tr *ngFor="let subject of data; let i = index;">
-          <td>{{ i+1 }}</td>
-          <td>{{ subject.subject }}</td>
-          <td>
-            <img src="assets/images/true.png" *ngIf="subject.active" style="height: 24px; width: 24px;" />
+          <td class="align-middle">{{ i+1 }}</td>
+          <td class="align-middle">{{ subject.subject }}</td>
+          <td class="align-middle">
+            <img src="assets/images/true.png" *ngIf="subject.active" style="height: 26px; width: 24px;" />
             <img src="assets/images/false.png" *ngIf="!subject.active" style="height: 24px; width: 24px;" />
           </td>
-          <td>
-            <a>
+          <td class="align-middle">
+            <button class="btn btn-outline-success" (click)="tableOnEditSubject($event, subject)" data-toggle="modal" data-target="#addSubjectModal">
               <i class="fa fa-pencil"></i>
-            </a> |
-            <a>
+            </button>
+            <button class="btn btn-outline-danger" (click)="tableOnDeactivateSubject(subject)">
               <i class="fa fa-remove"></i>
-            </a>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -39,7 +40,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h4 class="modal-title" id="modalLabelSmall">Add Subject Area</h4>
+        <h4 class="modal-title" id="modalLabelSmall">{{ editLabel }}</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
