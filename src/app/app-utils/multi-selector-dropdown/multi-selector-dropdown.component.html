@@ -21,8 +21,8 @@
         <div *ngFor="let data of list">
             <label class="dropdown-item">
                 <input type="checkbox" [(ngModel)]="data.checked" 
-                (change)="getSelectedValue(data.id, data.name, data.checked )" 
-                /> <span>{{ data.name }}</span>
+                (change)="getSelectedValue(data.value, data.label, data.checked )" 
+                /> <span>{{ data.label }}</span>
                 </label>
         </div>
     </div>

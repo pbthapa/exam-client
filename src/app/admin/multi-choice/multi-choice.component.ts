@@ -1,3 +1,4 @@
+import { ExamConstants } from './../../common/constants';
 import { MultiChoiceService } from './multi-choice-service';
 import { Subject } from './../subject-area/model/subject.model';
 import { SubjectAreaService } from './../subject-area/service/subject-area.service';
@@ -14,9 +15,9 @@ import { MultiChoiceModel } from './multi-choice-model';
 })
 export class MultiChoiceComponent implements OnInit {
   questionForm: FormGroup;
-  options: Array<string> = ['Option A', 'Option B', 'Option C', 'Option D'];
-  levels: Array<string> = ['Beginner', 'Medium', 'Advanced'];
-  subjects: Array<Subject> = [];
+  options: any[] = [];
+  levels: any[] = [];
+  list: any[] = [];
   subjectFilter = new FormControl('undefined');
   questions: Array<MultiChoiceModel> = [];
   hideQuestionList: boolean = true;
@@ -32,6 +33,8 @@ export class MultiChoiceComponent implements OnInit {
   }
 
   setFields() {
+    this.options = ExamConstants.options;
+    this.levels = ExamConstants.levels;
     this.questionForm = new FormGroup({
       'subject': new FormControl('undefined', Validators.required),
       'questionName': new FormControl(null, Validators.required),
@@ -61,18 +64,6 @@ export class MultiChoiceComponent implements OnInit {
 
   onSubmit(){
     if (this.questionForm.valid) {
-      var difficulty:number = 0;
-      switch(this.questionForm.value['level']) {
-        case 'Beginner': 
-          difficulty = 0;
-          break;
-        case 'Medium': 
-          difficulty = 1;
-          break;
-        case 'Advanced': 
-          difficulty = 2;
-          break;
-      }
       let question = new MultiChoiceModel(null, 
         this.questionForm.value['subject'], 
         this.questionForm.value['questionName'],
@@ -81,18 +72,18 @@ export class MultiChoiceComponent implements OnInit {
         this.questionForm.value['optionC'],
         this.questionForm.value['optionD'],
         this.questionForm.value['correctOption'],
-        difficulty,
+        this.questionForm.value['level'],
         this.questionForm.value['active']);
+        console.log(question);
       this._questionService.create(question);
-      this.subjects = [];
       this.getSubjectAreaList();
       this.setFields();
     }
   }
 
   getSubjectAreaList() {
-    Promise.all([this._subjectAreaService.getSubjectAreaList()])
-    .then(response => this.subjects = response[0])
+    Promise.all([this._subjectAreaService.getSubjectAreaSelectList()])
+    .then(response => this.list = response[0])
     .catch(error => console.log(error));
   }
 
@@ -108,7 +99,7 @@ export class MultiChoiceComponent implements OnInit {
     .catch(error => console.log(error));
   }
 
-  onSubjectChangeShowQuestion() {
+  onSubjectChangeShowQuestion(ev) {
     if(this.subjectFilter.value == "undefined") {
       //clear everything and hide
       this.hideQuestionList = true;

@@ -17,8 +17,8 @@
           <td>{{ i+1 }}</td>
           <td>{{ subject.subject }}</td>
           <td>
-            <i *ngIf="subject.active" class="fa fa-hand-o-up"></i>
-            <i *ngIf="!subject.active" class="fa fa-hand-o-down"></i>
+            <img src="assets/images/true.png" *ngIf="subject.active" style="height: 24px; width: 24px;" />
+            <img src="assets/images/false.png" *ngIf="!subject.active" style="height: 24px; width: 24px;" />
           </td>
           <td>
             <a>

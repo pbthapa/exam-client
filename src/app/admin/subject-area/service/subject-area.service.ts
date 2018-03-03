@@ -60,4 +60,10 @@ export class SubjectAreaService {
     .map(data => data.json())
     .toPromise();
   }
+
+  getSubjectAreaActiveList() {
+    return this._http.get(this.baseUrl + '/select-subjects')
+    .map(data => data.json())
+    .toPromise();
+  }
 }

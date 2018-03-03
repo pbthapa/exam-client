@@ -1,7 +1,6 @@
+import { ExamConstants } from './../../common/constants';
 import { MultiSelectorDropdownComponent } from './../../app-utils/multi-selector-dropdown/multi-selector-dropdown.component';
-import { DifficultyLevel } from './../../common/difficulty-level';
 import { MultiChoiceModel } from './../multi-choice/multi-choice-model';
-import { SearchCriteria } from './../../common/search-criteria';
 import { MultiChoiceService } from './../multi-choice/multi-choice-service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
@@ -14,9 +13,9 @@ import { SubjectAreaService } from '../subject-area/service/subject-area.service
 })
 export class QuestionSetComponent implements OnInit {
   questionSetForm: FormGroup;
-  levels: string[] = [];
+  levels: any[] = [];
   list: any[];
-  selectedSubjectIds: string = '';
+  selectedSubjectIds: number[] = [];
   questions: MultiChoiceModel[] = [];
   selectedQuestions: number[] = [];
   showContainer: boolean = false;
@@ -31,23 +30,18 @@ export class QuestionSetComponent implements OnInit {
   }
 
   setFields() {
-    this.levels = this.getLevels();
+    this.levels = ExamConstants.levels;
     this.questionSetForm = new FormGroup({
       'difficultyLevels': new FormGroup({})
     });
 
     this.levels.forEach(item => {
-      (<FormGroup>this.questionSetForm.get('difficultyLevels')).addControl(item, new FormControl(true));
+      (<FormGroup>this.questionSetForm.get('difficultyLevels')).addControl(item.key, new FormControl(true));
     });
-    
+
     this.selectedQuestions = [];
     this.showContainer = false;
     this.getSubjectAreaSelectList();
-  }
-
-  getLevels() {
-    const data = Object.keys(DifficultyLevel);
-    return data.slice(data.length / 2);
   }
 
   /*
@@ -63,35 +57,32 @@ export class QuestionSetComponent implements OnInit {
   }
 
   shareSelectedData(ev) {
-    if(ev == null) {
-      this.selectedSubjectIds = '';
+    if (ev == null) {
+      this.selectedSubjectIds = [];
     } else {
       this.selectedSubjectIds = ev.map(element => {
         return element.id;
-      }).join(', ');
+      });
     }
   }
 
   onFilter() {
     if (this.selectedSubjectIds.length > 0) {
       this.showContainer = true;
-      var criteria = new SearchCriteria();
-      criteria.ids = this.selectedSubjectIds;
-      if (this.questionSetForm.get('difficultyLevels').value['Beginner']) {
-        criteria.difficultyLevels.push(DifficultyLevel.Beginner);
+      let difficulty = this.questionSetForm.get('difficultyLevels').value;
+      let selectedLevels: number[] = [];
+
+      for (let index = 0; index < 3; index++) {
+        if (difficulty[index]) {
+          selectedLevels.push(index);
+        }
       }
 
-      if (this.questionSetForm.get('difficultyLevels').value['Medium']) {
-        criteria.difficultyLevels.push(DifficultyLevel.Medium);
-      }
-
-      if (this.questionSetForm.get('difficultyLevels').value['Advanced']) {
-        criteria.difficultyLevels.push(DifficultyLevel.Advanced);
-      }
-
-      Promise.all([this._questionService.getQuestionDetailsByCriteria(criteria)])
+      Promise.all([this._questionService.getQuestionDetailsByCriteria(JSON.stringify({ "subjectIds": 
+        this.selectedSubjectIds, "levels": selectedLevels }))])
         .then(response => this.setQuestions(response[0]))
         .catch(error => console.log(error));
+
     } else {
       this.showContainer = false;
     }
