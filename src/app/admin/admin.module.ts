@@ -1,3 +1,5 @@
+import { AlertComponent } from './../app-utils/alert/alert.component';
+import { AlertService } from './../app-utils/alert/alert.service';
 import { TreeComponent } from './../app-utils/tree/tree.component';
 import { TreeService } from './../app-utils/tree/tree.service';
 import { MultiSelectorDropdownComponent } from './../app-utils/multi-selector-dropdown/multi-selector-dropdown.component';
@@ -29,7 +31,8 @@ import { QuestionSetComponent } from './question-set/question-set.component';
     AdminComponent,
     QuestionSetComponent,
     MultiSelectorDropdownComponent,
-    TreeComponent
+    TreeComponent,
+    AlertComponent
   ],
   imports: [
     SharedModule,
@@ -45,7 +48,8 @@ import { QuestionSetComponent } from './question-set/question-set.component';
     MultiChoiceService,
     SubjectAreaService,
     DataLoaderService,
-    TreeService
+    TreeService,
+    AlertService
   ],
   exports: [
     TableComponent

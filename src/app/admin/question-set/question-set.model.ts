@@ -1,8 +1,8 @@
 export class QuestionSetModel {
     id?: number;
-    questionSetName: string;
-    totalTime: number;
-    totalMark: number;
+    question_set_name: string;
+    total_time: number;
+    total_mark: number;
     selectedQuestionIds?: number[];
     question_id?: number;
     active?: boolean = true;
@@ -12,9 +12,9 @@ export class QuestionSetModel {
     constructor(questionSetName: string, totalTime: number, 
         totalMark: number, selectedQuestionIds?: number[], id?: number) {
             this.id = id;
-            this.questionSetName = questionSetName;
-            this.totalMark = totalMark;
-            this.totalTime = totalTime;
+            this.question_set_name = questionSetName;
+            this.total_mark = totalMark;
+            this.total_time = totalTime;
             this.selectedQuestionIds = selectedQuestionIds;
     }
 }

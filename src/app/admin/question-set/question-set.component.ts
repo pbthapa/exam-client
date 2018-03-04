@@ -60,9 +60,9 @@ export class QuestionSetComponent implements OnInit {
         this.questionSetForm.value['totalMark'],
         this.selectedQuestions
       );
-      console.log(model);
-      this._questionService.createQuestionSet(model);
-      //this.setFields();
+      Promise.all([this._questionService.createQuestionSet(model)])
+        .then(response => this.setFields())
+        .catch(error => console.log(error._body)); 
     } else {
       console.log("Try submitting form with correct details");
     }
@@ -71,7 +71,7 @@ export class QuestionSetComponent implements OnInit {
   getSubjectAreaSelectList() {
     Promise.all([this._subjectAreaService.getSubjectAreaSelectList()])
       .then(response => this.list = response[0])
-      .catch(error => console.log(error));
+      .catch(error => console.log(error._body));
   }
 
   shareSelectedData(ev) {
@@ -98,7 +98,7 @@ export class QuestionSetComponent implements OnInit {
       Promise.all([this._questionService.getQuestionDetailsByCriteria(JSON.stringify({ "subjectIds": 
         this.selectedSubjectIds, "levels": selectedLevels }))])
         .then(response => this.setQuestions(response[0]))
-        .catch(error => console.log(error));
+        .catch(error => console.log(error._body));
 
     } else {
       this.showContainer = false;

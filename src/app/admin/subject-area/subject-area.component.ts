@@ -1,3 +1,4 @@
+import { AlertService } from './../../app-utils/alert/alert.service';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { SubjectAreaService } from './service/subject-area.service';
 import { Subject } from './model/subject.model';
@@ -25,7 +26,8 @@ export class SubjectAreaComponent implements OnInit {
   // data is input to the table component 
   public data;
 
-  constructor(private formBuilder: FormBuilder, private _subjectAreaService: SubjectAreaService) {
+  constructor(private _formBuilder: FormBuilder, private _subjectAreaService: SubjectAreaService,
+    private _alertService: AlertService) {
   }
 
   setFields() {
@@ -44,7 +46,7 @@ export class SubjectAreaComponent implements OnInit {
     // this.tableOptions.sort = true;
 
     // These are majority of data to be collected
-    this.subForm = this.formBuilder.group({
+    this.subForm = this._formBuilder.group({
       subject: ['', Validators.required],
       active: ['', Validators.required],
       subjectId: ['', Validators.required],
@@ -53,29 +55,49 @@ export class SubjectAreaComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.subjectForm.valid) {
+    if (this.subjectForm.valid) {
       let subject = new Subject(
         this.subjectForm.value['id'],
         this.subjectForm.value['subject'],
-        this.subjectForm.value['active']==null?false:this.subjectForm.value['active']
+        this.subjectForm.value['active'] == null ? false : this.subjectForm.value['active']
       );
-      if(subject.id == null) {
-        this._subjectAreaService.create(subject);
+      if (subject.id == null) {
+        Promise.all([this._subjectAreaService.create(subject)])
+          .then(response => {
+            this._alertService.success("Subject area updated successfully");
+            this.setFields();
+          })
+          .catch(error => {
+            this._alertService.success("Subject area updated successfully");
+            console.log(error._body);
+          });
       } else {
-        this._subjectAreaService.update(subject);
+        Promise.all([this._subjectAreaService.update(subject)])
+          .then(response => {
+            this._alertService.success("Subject area updated successfully");
+            this.setFields();
+            this.getSubjectAreaList();
+          })
+          .catch(error => {
+            this._alertService.error("Unable to update Subject area");
+            console.log(error._body);
+          });
       }
-      this.setFields();
       // this.refreshTable.emit();
     }
   }
 
   getSubjectAreaList() {
     Promise.all([this._subjectAreaService.getSubjectAreaList()])
-    .then(response => {
-      this.data = response[0];
-      // this.tableRows = this.data;
-      // this.setTableOption();
-    });
+      .then(response => {
+        this.data = response[0];
+        // this.tableRows = this.data;
+        // this.setTableOption();
+      })
+      .catch(error => {
+        this._alertService.error("Unable to show subject area list");
+        console.log(error._body);
+      });
   }
 
 
@@ -105,13 +127,20 @@ export class SubjectAreaComponent implements OnInit {
 
   tableOnEditSubject(ev, row) {
     this.editLabel = "Edit Subject Area";
-    console.log(ev);
     this.subjectForm.patchValue({ 'id': row.id, 'subject': row.subject, 'active': row.active });
   }
 
   tableOnDeactivateSubject(row) {
-    this._subjectAreaService.delete(row.id);
-    this.getSubjectAreaList();
+    if (row.active) {
+      Promise.all([this._subjectAreaService.delete(row.id)])
+        .then(response => {
+          this._alertService.success(row.subject + " deactivated successfully");
+          this.getSubjectAreaList();
+        })
+        .catch(error => {
+          this._alertService.error("Unable to deactivate " + row.subject);
+          console.log(error._body);
+        });
+    }
   }
-  
 }
