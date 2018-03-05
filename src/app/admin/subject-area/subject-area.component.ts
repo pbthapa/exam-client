@@ -62,7 +62,7 @@ export class SubjectAreaComponent implements OnInit {
         this.subjectForm.value['active'] == null ? false : this.subjectForm.value['active']
       );
       if (subject.id == null) {
-        Promise.all([this._subjectAreaService.create(subject)])
+        this._subjectAreaService.create(subject)
           .then(response => {
             this._alertService.success("Subject area updated successfully");
             this.setFields();
@@ -73,7 +73,7 @@ export class SubjectAreaComponent implements OnInit {
             console.log(error._body);
           });
       } else {
-        Promise.all([this._subjectAreaService.update(subject)])
+        this._subjectAreaService.update(subject)
           .then(response => {
             this._alertService.success("Subject area updated successfully");
             this.setFields();
@@ -89,9 +89,9 @@ export class SubjectAreaComponent implements OnInit {
   }
 
   getSubjectAreaList() {
-    Promise.all([this._subjectAreaService.getSubjectAreaList()])
+    this._subjectAreaService.getSubjectAreaList()
       .then(response => {
-        this.data = response[0];
+        this.data = response;
         // this.tableRows = this.data;
         // this.setTableOption();
       })
@@ -133,7 +133,7 @@ export class SubjectAreaComponent implements OnInit {
 
   tableOnDeactivateSubject(row) {
     if (row.active) {
-      Promise.all([this._subjectAreaService.delete(row.id)])
+      this._subjectAreaService.delete(row.id)
         .then(response => {
           this._alertService.success(row.subject + " deactivated successfully");
           this.getSubjectAreaList();

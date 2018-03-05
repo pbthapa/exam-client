@@ -5,7 +5,7 @@ export class QuestionSetModel {
     total_mark: number;
     selectedQuestionIds?: number[];
     question_id?: number;
-    active?: boolean = true;
+    active?: boolean = false;
     created_at?: Date;
     updated_at?: Date;
 

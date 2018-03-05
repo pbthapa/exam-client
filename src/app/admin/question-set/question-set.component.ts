@@ -1,3 +1,4 @@
+import { AlertService } from './../../app-utils/alert/alert.service';
 import { ExamConstants } from './../../common/constants';
 import { MultiSelectorDropdownComponent } from './../../app-utils/multi-selector-dropdown/multi-selector-dropdown.component';
 import { MultiChoiceModel } from './../multi-choice/multi-choice-model';
@@ -21,13 +22,15 @@ export class QuestionSetComponent implements OnInit {
   selectedQuestions: number[] = [];
   showContainer: boolean = false;
   @ViewChild(MultiSelectorDropdownComponent) multiSelect: MultiSelectorDropdownComponent;
+  qsetModels: QuestionSetModel[] = [];
 
   constructor(private _fb: FormBuilder, private _subjectAreaService: SubjectAreaService,
-    private _questionService: MultiChoiceService) {
+    private _questionService: MultiChoiceService, private _alertService: AlertService) {
   }
 
   ngOnInit() {
     this.setFields();
+    this.getAllQuestionSetDetails();
   }
 
   setFields() {
@@ -53,6 +56,7 @@ export class QuestionSetComponent implements OnInit {
    */
   onSubmit() {
     if(this.questionSetForm.valid && this.selectedQuestions.length > 0) {
+      this._alertService.clear();
       //set model to create question set
       const model = new QuestionSetModel(
         this.questionSetForm.value['questionSetName'],
@@ -60,17 +64,23 @@ export class QuestionSetComponent implements OnInit {
         this.questionSetForm.value['totalMark'],
         this.selectedQuestions
       );
-      Promise.all([this._questionService.createQuestionSet(model)])
-        .then(response => this.setFields())
-        .catch(error => console.log(error._body)); 
+      this._questionService.createQuestionSet(model)
+        .then(response => {
+          this._alertService.success("Question Set " + model.question_set_name + " saved successfully")
+          this.onReset();
+        })
+        .catch(error => {
+          this._alertService.error("Unable to save " + model.question_set_name);
+          console.log(error._body);
+        }); 
     } else {
       console.log("Try submitting form with correct details");
     }
   }
 
   getSubjectAreaSelectList() {
-    Promise.all([this._subjectAreaService.getSubjectAreaSelectList()])
-      .then(response => this.list = response[0])
+    this._subjectAreaService.getSubjectAreaSelectList()
+      .then(response => this.list = response)
       .catch(error => console.log(error._body));
   }
 
@@ -86,6 +96,7 @@ export class QuestionSetComponent implements OnInit {
 
   onFilter() {
     if (this.selectedSubjectIds.length > 0) {
+      this._alertService.clear();
       let difficulty = this.questionSetForm.get('difficultyLevels').value;
       let selectedLevels: number[] = [];
 
@@ -95,9 +106,9 @@ export class QuestionSetComponent implements OnInit {
         }
       }
 
-      Promise.all([this._questionService.getQuestionDetailsByCriteria(JSON.stringify({ "subjectIds": 
-        this.selectedSubjectIds, "levels": selectedLevels }))])
-        .then(response => this.setQuestions(response[0]))
+      this._questionService.getQuestionDetailsByCriteria(JSON.stringify({ "subjectIds": 
+        this.selectedSubjectIds, "levels": selectedLevels }))
+        .then(response => this.setQuestions(response))
         .catch(error => console.log(error._body));
 
     } else {
@@ -110,6 +121,7 @@ export class QuestionSetComponent implements OnInit {
       this.showContainer = true;
       this.questions = questions;
     } else {
+      this._alertService.info("No question data found for selected criteria");
       this.questions = [];
       this.showContainer = false;
     }
@@ -127,5 +139,11 @@ export class QuestionSetComponent implements OnInit {
   onReset() {
     this.setFields();
     this.multiSelect._selectedDataList = [];
+  }
+
+  getAllQuestionSetDetails() {
+    this._questionService.getAllQuestionSetDetails()
+      .then(response => { this.qsetModels = response; })
+      .catch(error => console.log(error._body));
   }
 }

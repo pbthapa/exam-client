@@ -1,93 +1,134 @@
 <div class="jumbotron jumbotron-fluid jumbotron-plain">
     <div class="container">
+        <alert></alert>
         <h4 class="text-info">Question Set Preparation</h4>
-        <form [formGroup]="questionSetForm">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <multi-selector-dropdown [list]="list" (selectedDataList)="shareSelectedData($event)">
-                        </multi-selector-dropdown>
-                    </div>
+        <div class="bd-example bd-example-tabs">
+            <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="home"
+                    aria-expanded="true" (click)="getAllQuestionSetDetails()">List of Question Set</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="profile"
+                    aria-expanded="false">Add Question Set</a>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" aria-expanded="true">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <th>S.No</th>
+                            <th>Set Name</th>
+                            <th>Time (In Min.)</th>
+                            <th>Mark</th>
+                            <th>Active</th>
+                            <th>Active On</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of qsetModels; let i=index;">
+                                <td class="align-middle">{{ i+1 }}</td>
+                                <td class="align-middle">{{ data.question_set_name }}</td>
+                                <td class="align-middle">{{ data.total_time }}</td>
+                                <td class="align-middle">{{ data.total_mark }}</td>
+                                <td class="align-middle">
+                                    <img src="assets/images/true.png" *ngIf="data.active" style="height: 26px; width: 24px;" />
+                                    <img src="assets/images/false.png" *ngIf="!data.active" style="height: 24px; width: 24px;" />
+                                </td>
+                                <td class="align-middle">{{ data.active_on }}</td>
+                                <td class="align-middle">Activate | View</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <form [formGroup]="questionSetForm.controls['difficultyLevels']">
-                            <div *ngFor="let item of levels" style="padding: 0.7em; float:left;">
-                                <input type="checkbox" [formControlName]="item.key">
-                                <span>{{ item.value }}</span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <button (click)="onFilter()" class="btn btn-success" style="float:right;">Filter Question</button>
-                </div>
-            </div>
-            <div [hidden]="!showContainer" style="padding: 5px;">
-                <div class="card">
-                    <div class="card-header">
-                        Set: <input type="text" formControlName="questionSetName" class="form-control-sm">
-                        <button type="button" class="btn btn-outline-secondary">
-                            [Total Question Selected: {{ selectedQuestions.length }}]
-                        </button>
-                    </div>
-                    <div class="card-body">
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" aria-expanded="false">
+                    <form [formGroup]="questionSetForm">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Total Mark:</label>
-                                    <input type="text" formControlName="totalMark" class="form-control">
+                                    <multi-selector-dropdown [list]="list" (selectedDataList)="shareSelectedData($event)">
+                                    </multi-selector-dropdown>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Total Time (In Min):</label>
-                                    <input type="text" formControlName="totalTime" class="form-control">
+                                    <form [formGroup]="questionSetForm.controls['difficultyLevels']">
+                                        <div *ngFor="let item of levels" style="padding: 0.7em; float:left;">
+                                            <input type="checkbox" [formControlName]="item.key">
+                                            <span>{{ item.value }}</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <button (click)="onFilter()" class="btn btn-success" style="float:right;">Filter Question</button>
+                            </div>
+                        </div>
+                        <div [hidden]="!showContainer" style="padding: 5px;">
+                            <div class="card">
+                                <div class="card-header">
+                                    Set:
+                                    <input type="text" formControlName="questionSetName" class="form-control-sm">
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        [Total Question Selected: {{ selectedQuestions.length }}]
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Total Mark:</label>
+                                                <input type="text" formControlName="totalMark" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Total Time (In Min):</label>
+                                                <input type="text" formControlName="totalTime" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <table class="table table-sm table-striped">
+                                            <thead>
+                                                <th>S.No</th>
+                                                <th>Subject</th>
+                                                <th>Question</th>
+                                                <th>Options</th>
+                                                <th>Level</th>
+                                                <th>Select</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of questions; let i=index;">
+                                                    <td class="align-middle">{{ i+1 }}</td>
+                                                    <td class="align-middle">{{ data.SubjectArea.subject }}</td>
+                                                    <td class="align-middle">{{ data.question }}</td>
+                                                    <td class="align-middle">
+                                                        <ul>
+                                                            <li>A. {{ data.option_a }}</li>
+                                                            <li>B. {{ data.option_b }}</li>
+                                                            <li>C. {{ data.option_c }}</li>
+                                                            <li>D. {{ data.option_d }}</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td class="align-middle">{{ levels[data.level].value }}</td>
+                                                    <td class="align-middle">
+                                                        <input type="checkbox" (click)="setCheckedQuestion($event, data.id)">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <button (click)="onSubmit()" class="btn btn-primary" [disabled]="!questionSetForm.valid">Submit</button>
+                                    <button (click)="onReset()" class="btn btn-secondary">Reset</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <table class="table table-sm table-striped">
-                                <thead>
-                                    <th>S.No</th>
-                                    <th>Subject</th>
-                                    <th>Question</th>
-                                    <th>Options</th>
-                                    <th>Level</th>
-                                    <th>Select</th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of questions; let i=index;">
-                                        <td class="align-middle">{{ i+1 }}</td>
-                                        <td class="align-middle">{{ data.SubjectArea.subject }}</td>
-                                        <td class="align-middle">{{ data.question }}</td>
-                                        <td class="align-middle">
-                                            <ul>
-                                                <li>A. {{ data.option_a }}</li>
-                                                <li>B. {{ data.option_b }}</li>
-                                                <li>C. {{ data.option_c }}</li>
-                                                <li>D. {{ data.option_d }}</li>
-                                            </ul>
-                                        </td>
-                                        <td class="align-middle">{{ levels[data.level].value }}</td>
-                                        <td class="align-middle">
-                                            <input type="checkbox" (click)="setCheckedQuestion($event, data.id)">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <button (click)="onSubmit()" class="btn btn-primary" [disabled]="!questionSetForm.valid">Submit</button>
-                        <button (click)="onReset()" class="btn btn-secondary">Reset</button>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>

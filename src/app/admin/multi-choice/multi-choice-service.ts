@@ -77,4 +77,11 @@ export class MultiChoiceService {
     .toPromise()
     .catch(this.handleError);
   }
+
+  getAllQuestionSetDetails() {
+    return this._http.get(this.baseUrl + '/list-question-set')
+    .map(response => response.json())
+    .toPromise()
+    .catch(this.handleError);
+  }
 }

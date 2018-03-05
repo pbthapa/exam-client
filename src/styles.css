@@ -28,3 +28,7 @@
 .wrong {
     color: firebrick;
 }
+
+.nav-tabs {
+    margin-bottom: 1rem;
+  }
