@@ -88,8 +88,8 @@ export class MultiChoiceComponent implements OnInit {
   }
 
   getSubjectAreaList() {
-    Promise.all([this._subjectAreaService.getSubjectAreaSelectList()])
-    .then(response => this.list = response[0])
+   this._subjectAreaService.getSubjectAreaSelectList()
+    .then(response => this.list = response)
     .catch(error => {
       this._alertService.error("Unable to show the subject list");
       console.log(error._body);
@@ -97,8 +97,8 @@ export class MultiChoiceComponent implements OnInit {
   }
 
   getQuestionList() {
-    Promise.all([this._questionService.getQuestionList()])
-    .then(response => this.questions = response[0])
+    this._questionService.getQuestionList()
+    .then(response => this.questions = response)
     .catch(error => {
       this._alertService.error("Unable to show the question list");
       console.log(error._body);
@@ -107,11 +107,23 @@ export class MultiChoiceComponent implements OnInit {
 
   getQuestionListBySubjectId(subjectId) {
     Promise.all([this._questionService.getQuestionListBySubjectId(subjectId)])
-    .then(response => this.questions = response[0])
-    .catch(error => console.log(error._body));
+    .then(response => {
+      this._alertService.clear();
+      if (response[0].length > 0) {
+        this.questions = response[0];
+      } else {
+        this.hideQuestionList = true;
+        this._alertService.info("No question list available for selected subject");
+      }
+    })
+    .catch(error => {
+      this._alertService.error("Unable to show Question List");
+      console.log(error._body)
+    });
   }
 
   onSubjectChangeShowQuestion(ev) {
+    this._alertService.clear();
     if(this.subjectFilter.value == "undefined") {
       //clear everything and hide
       this.hideQuestionList = true;

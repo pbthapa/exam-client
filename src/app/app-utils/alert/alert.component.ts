@@ -1,7 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Alert, AlertType } from './alert';
 import { AlertService } from './alert.service';
+import { Subscriber } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -9,13 +10,14 @@ import { AlertService } from './alert.service';
     templateUrl: 'alert.component.html'
 })
 
-export class AlertComponent {
+export class AlertComponent implements OnInit, OnDestroy {
     alerts: Alert[] = [];
+    data:Array<any> = [];
 
     constructor(private alertService: AlertService) { }
 
     ngOnInit() {
-        this.alertService.getAlert().subscribe((alert: Alert) => {
+       this.data.push(this.alertService.getAlert().subscribe((alert: Alert) => {
             if (!alert) {
                 // clear alerts when an empty alert is received
                 this.alerts = [];
@@ -24,7 +26,7 @@ export class AlertComponent {
 
             // add alert to array
             this.alerts.push(alert);
-        });
+        }));
     }
 
     removeAlert(alert: Alert) {
@@ -47,5 +49,9 @@ export class AlertComponent {
             case AlertType.Warning:
                 return 'alert alert-warning';
         }
+    }
+
+    ngOnDestroy () {
+        this.data.forEach(o=>o.unsubscribe());
     }
 }

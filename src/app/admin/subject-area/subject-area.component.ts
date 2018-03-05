@@ -66,6 +66,7 @@ export class SubjectAreaComponent implements OnInit {
           .then(response => {
             this._alertService.success("Subject area updated successfully");
             this.setFields();
+            this.getSubjectAreaList();
           })
           .catch(error => {
             this._alertService.success("Subject area updated successfully");
