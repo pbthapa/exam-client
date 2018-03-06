@@ -1,0 +1,71 @@
+<div class="jumbotron jumbotron-fluid jumbotron-plain">
+  <div class="container">
+    <alert></alert>
+    <h4 class="text-info">Edit Question Set {{ data?.question_set_name }}</h4>
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label>Total Mark:</label>
+          <input type="text" class="form-control" value="{{ data?.total_mark }}">
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label>Total Time (In Min):</label>
+          <input type="text" class="form-control" value="{{ data?.total_time }}">
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label>Active:</label>
+          <input type="checkbox" class="form-checkbox" value="{{ data?.active }}">
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label>Active On:</label>
+          <input type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <table class="table table-sm table-striped">
+            <thead>
+              <th>S.No</th>
+              <th>Subject</th>
+              <th>Question</th>
+              <th>Options</th>
+              <th>Level</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let q of questions; let i=index;">
+                <td class="align-middle">{{ i+1 }}</td>
+                <td class="align-middle">{{ q.SubjectArea.subject }}</td>
+                <td class="align-middle">{{ q.question }}</td>
+                <td class="align-middle">
+                  <ul>
+                    <li>A. {{ q.option_a }}</li>
+                    <li>B. {{ q.option_b }}</li>
+                    <li>C. {{ q.option_c }}</li>
+                    <li>D. {{ q.option_d }}</li>
+                  </ul>
+                </td>
+                <td class="align-middle">{{ levels[q.level].value }}</td>
+                <td class="align-middle">
+                  Remove>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <button (click)="onSubmit()" class="btn btn-primary">Submit</button>
+        <button (click)="onReset()" class="btn btn-secondary">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>

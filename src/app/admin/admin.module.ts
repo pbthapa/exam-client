@@ -1,3 +1,4 @@
+import { EditQuestionSetComponent } from './question-set/edit-question-set/edit-question-set.component';
 import { AlertComponent } from './../app-utils/alert/alert.component';
 import { AlertService } from './../app-utils/alert/alert.service';
 import { TreeComponent } from './../app-utils/tree/tree.component';
@@ -32,7 +33,8 @@ import { QuestionSetComponent } from './question-set/question-set.component';
     QuestionSetComponent,
     MultiSelectorDropdownComponent,
     TreeComponent,
-    AlertComponent
+    AlertComponent,
+    EditQuestionSetComponent
   ],
   imports: [
     SharedModule,

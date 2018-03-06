@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AlertService } from './../../app-utils/alert/alert.service';
 import { ExamConstants } from './../../common/constants';
 import { MultiSelectorDropdownComponent } from './../../app-utils/multi-selector-dropdown/multi-selector-dropdown.component';
@@ -25,7 +26,8 @@ export class QuestionSetComponent implements OnInit {
   qsetModels: QuestionSetModel[] = [];
 
   constructor(private _fb: FormBuilder, private _subjectAreaService: SubjectAreaService,
-    private _questionService: MultiChoiceService, private _alertService: AlertService) {
+    private _questionService: MultiChoiceService, private _alertService: AlertService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -152,7 +154,7 @@ export class QuestionSetComponent implements OnInit {
   }
 
   tableOnEditQuestionSet(data) {
-    console.log(data);
+    this.router.navigate(['/admin/edit-question-set', data.id]);
   }
 
   tableOnDeactivateQuestionSet(data) {

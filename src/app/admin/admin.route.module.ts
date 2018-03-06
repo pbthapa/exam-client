@@ -1,3 +1,4 @@
+import { EditQuestionSetComponent } from './question-set/edit-question-set/edit-question-set.component';
 import { QuestionSetComponent } from './question-set/question-set.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -12,7 +13,8 @@ import { AdminComponent } from './admin.component';
                 path: '', component: AdminComponent, children: [
                         { path: 'subject', component: SubjectAreaComponent },
                         { path: 'multi-choice', component: MultiChoiceComponent },
-                        { path: 'prepare-question-set', component: QuestionSetComponent }
+                        { path: 'prepare-question-set', component: QuestionSetComponent },
+                        { path: 'edit-question-set/:id', component: EditQuestionSetComponent }
                 ]
             }
         ])
