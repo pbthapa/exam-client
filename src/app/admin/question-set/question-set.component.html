@@ -32,7 +32,17 @@
                                     <img src="assets/images/false.png" *ngIf="!data.active" style="height: 24px; width: 24px;" />
                                 </td>
                                 <td class="align-middle">{{ data.active_on }}</td>
-                                <td class="align-middle">Activate | View</td>
+                                <td class="align-middle">
+                                    <button class="btn btn-outline-success" (click)="tableOnEditQuestionSet(data)">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-outline-info" (click)="tableOnActivateQuestionSet(data)" data-toggle="modal" data-target="#questionSetDetailModal">
+                                        <i class="fa fa-book"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" (click)="tableOnDeactivateQuestionSet(data)">
+                                        <i class="fa fa-remove"></i>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -132,3 +142,22 @@
         </div>
     </div>
 </div>
+
+<!-- The modal -->
+<div class="modal fade" id="questionSetDetailModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabelSmall">Question Set Detail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->

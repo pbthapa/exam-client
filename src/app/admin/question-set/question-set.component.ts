@@ -146,4 +146,16 @@ export class QuestionSetComponent implements OnInit {
       .then(response => { this.qsetModels = response; })
       .catch(error => console.log(error._body));
   }
+
+  tableOnActivateQuestionSet(data) {
+    console.log(data);
+  }
+
+  tableOnEditQuestionSet(data) {
+    console.log(data);
+  }
+
+  tableOnDeactivateQuestionSet(data) {
+    console.log(data);
+  }
 }
