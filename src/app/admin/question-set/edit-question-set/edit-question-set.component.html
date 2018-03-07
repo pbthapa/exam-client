@@ -1,24 +1,24 @@
 <div class="jumbotron jumbotron-fluid jumbotron-plain">
   <div class="container">
     <alert></alert>
-    <h4 class="text-info">Edit Question Set {{ data?.question_set_name }}</h4>
+    <h4 class="text-info">Edit Question Set {{ qSetDetail?.question_set_name }} [Total Question Selected: {{ questions.length }}]</h4>
     <div class="row">
       <div class="col-lg-3">
         <div class="form-group">
           <label>Total Mark:</label>
-          <input type="text" class="form-control" value="{{ data?.total_mark }}">
+          <input type="text" class="form-control" value="{{ qSetDetail?.total_mark }}">
         </div>
       </div>
       <div class="col-lg-3">
         <div class="form-group">
           <label>Total Time (In Min):</label>
-          <input type="text" class="form-control" value="{{ data?.total_time }}">
+          <input type="text" class="form-control" value="{{ qSetDetail?.total_time }}">
         </div>
       </div>
       <div class="col-lg-3">
         <div class="form-group">
           <label>Active:</label>
-          <input type="checkbox" class="form-checkbox" value="{{ data?.active }}">
+          <input type="checkbox" class="form-checkbox" value="{{ qSetDetail?.active }}">
         </div>
       </div>
       <div class="col-lg-3">
@@ -34,7 +34,6 @@
           <table class="table table-sm table-striped">
             <thead>
               <th>S.No</th>
-              <th>Subject</th>
               <th>Question</th>
               <th>Options</th>
               <th>Level</th>
@@ -43,7 +42,6 @@
             <tbody>
               <tr *ngFor="let q of questions; let i=index;">
                 <td class="align-middle">{{ i+1 }}</td>
-                <td class="align-middle">{{ q.SubjectArea.subject }}</td>
                 <td class="align-middle">{{ q.question }}</td>
                 <td class="align-middle">
                   <ul>
@@ -55,7 +53,9 @@
                 </td>
                 <td class="align-middle">{{ levels[q.level].value }}</td>
                 <td class="align-middle">
-                  Remove>
+                  <button class="btn btn-outline-danger">
+                    <i class="fa fa-remove"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>

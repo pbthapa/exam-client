@@ -1,7 +1,9 @@
 import { QuestionSetModel } from './../question-set.model';
 import { MultiChoiceService } from './../../multi-choice/multi-choice-service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MultiChoiceModel } from '../../multi-choice/multi-choice-model';
+import { ExamConstants } from '../../../common/constants';
+import { DataService } from '../../../common/data.service';
 
 @Component({
   selector: 'app-edit-question-set',
@@ -11,13 +13,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class EditQuestionSetComponent implements OnInit {
 
   private subscriber: any;
-  data: any;
+  qSetDetail: QuestionSetModel;
+  questions: any[] = [];
+  levels: any[] = [];
 
-  constructor(private route: ActivatedRoute, private _questionService: MultiChoiceService) { }
+  constructor(private _questionService: MultiChoiceService,
+    private data: DataService) { }
 
   ngOnInit() {
-    this.subscriber = this.route.params.subscribe(params => {
-      const id = +params['id']; // (+) converts string 'id' to a number
+    this.levels = ExamConstants.levels;
+    this.subscriber = this.data.currentMessage.subscribe(id => {
       this.getQuestionSetDetailsById(id);
     });
   }
@@ -25,8 +30,8 @@ export class EditQuestionSetComponent implements OnInit {
   getQuestionSetDetailsById(id) {
     this._questionService.getAllQuestionSetDetailsById(id)
       .then(x => {
-        this.data = x;
-        console.log(this.data);
+        this.qSetDetail = x[0];
+        this.questions = x[1];
       })
       .catch(error => console.log(error._body));
   }

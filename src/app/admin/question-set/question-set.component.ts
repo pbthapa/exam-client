@@ -9,6 +9,7 @@ import { Validators, FormGroup, FormControl, FormBuilder, FormArray } from '@ang
 import { Subject } from '../subject-area/model/subject.model';
 import { SubjectAreaService } from '../subject-area/service/subject-area.service';
 import { QuestionSetModel } from './question-set.model';
+import { DataService } from '../../common/data.service';
 
 @Component({
   selector: 'app-question-set',
@@ -27,7 +28,7 @@ export class QuestionSetComponent implements OnInit {
 
   constructor(private _fb: FormBuilder, private _subjectAreaService: SubjectAreaService,
     private _questionService: MultiChoiceService, private _alertService: AlertService,
-    private router: Router) {
+    private router: Router, private data: DataService) {
   }
 
   ngOnInit() {
@@ -154,7 +155,8 @@ export class QuestionSetComponent implements OnInit {
   }
 
   tableOnEditQuestionSet(data) {
-    this.router.navigate(['/admin/edit-question-set', data.id]);
+    this.data.queryParam(data.id);
+    this.router.navigate(['/admin/edit-question-set/']);
   }
 
   tableOnDeactivateQuestionSet(data) {

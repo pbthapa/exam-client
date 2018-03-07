@@ -8,6 +8,7 @@ import { HomeModule } from './home/home.module';
 import { AppRoutingModule } from './app.route.module';
 import { KeycloakHttp, keycloakHttpFactory } from './keycloak/keycloak.http';
 import { KeycloakService } from './keycloak/keycloak.service';
+import { DataService } from './common/data.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { KeycloakService } from './keycloak/keycloak.service';
       useFactory: keycloakHttpFactory,
       deps: [XHRBackend, RequestOptions, KeycloakService]
    },
-   KeycloakService
+   KeycloakService,
+   DataService
   ],
   exports: [],
   bootstrap: [AppComponent]

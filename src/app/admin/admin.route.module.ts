@@ -14,7 +14,7 @@ import { AdminComponent } from './admin.component';
                         { path: 'subject', component: SubjectAreaComponent },
                         { path: 'multi-choice', component: MultiChoiceComponent },
                         { path: 'prepare-question-set', component: QuestionSetComponent },
-                        { path: 'edit-question-set/:id', component: EditQuestionSetComponent }
+                        { path: 'edit-question-set', component: EditQuestionSetComponent }
                 ]
             }
         ])
