@@ -51,7 +51,10 @@ export class MultiChoiceService {
   }
 
   getQuestion(id: number) {
-    return this._http.get(this.baseUrl + '/question' + id)
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    return this._http.post(this.baseUrl + "/question", JSON.stringify({'id': id}), options)
     .map(response => response.json())
     .toPromise()
     .catch(this.handleError);
