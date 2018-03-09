@@ -74,7 +74,7 @@ export class MultiChoiceComponent implements OnInit {
         this.questionForm.value['correctOption'],
         this.questionForm.value['level'],
         this.questionForm.value['active']);
-      Promise.all([this._questionService.create(question)])
+      this._questionService.create(question)
         .then(response => {
           this._alertService.success("Question saved successfully");
           this.getSubjectAreaList();
@@ -106,11 +106,11 @@ export class MultiChoiceComponent implements OnInit {
   }
 
   getQuestionListBySubjectId(subjectId) {
-    Promise.all([this._questionService.getQuestionListBySubjectId(subjectId)])
+    this._questionService.getQuestionListBySubjectId(subjectId)
     .then(response => {
       this._alertService.clear();
-      if (response[0].length > 0) {
-        this.questions = response[0];
+      if (response.length > 0) {
+        this.questions = response;
       } else {
         this.hideQuestionList = true;
         this._alertService.info("No question list available for selected subject");
@@ -123,11 +123,11 @@ export class MultiChoiceComponent implements OnInit {
   }
 
   onSubjectChangeShowQuestion(ev) {
+    this.questions = [];
     this._alertService.clear();
     if(this.subjectFilter.value == "undefined") {
       //clear everything and hide
       this.hideQuestionList = true;
-      this.questions = [];
     } else {
       this.hideQuestionList = false;
       this.getQuestionListBySubjectId(this.subjectFilter.value);
