@@ -22,6 +22,7 @@ import { HomeModule } from '../home/home.module';
 import { AdminComponent } from './admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuestionSetComponent } from './question-set/question-set.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,9 @@ import { QuestionSetComponent } from './question-set/question-set.component';
     AdminRoutingModule,
     HomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule
   ],
   providers: [
     MultiChoiceService,

@@ -36,9 +36,6 @@
                                     <button class="btn btn-outline-success" (click)="tableOnEditQuestionSet(data)">
                                         <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button class="btn btn-outline-info" (click)="tableOnActivateQuestionSet(data)" data-toggle="modal" data-target="#questionSetDetailModal">
-                                        <i class="fa fa-book"></i>
-                                    </button>
                                     <button class="btn btn-outline-danger" (click)="tableOnDeactivateQuestionSet(data)">
                                         <i class="fa fa-remove"></i>
                                     </button>
@@ -81,16 +78,31 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label>Total Mark:</label>
-                                                <input type="text" formControlName="totalMark" class="form-control">
+                                                <input type="text" class="form-control" formControlName="totalMark">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label>Total Time (In Min):</label>
-                                                <input type="text" formControlName="totalTime" class="form-control">
+                                                <input type="text" class="form-control" formControlName="totalTime">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Active:</label>
+                                                <div>
+                                                    <input type="checkbox" class="form-checkbox" formControlName="active">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Active On:</label>
+                                                <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="activeOn" class="form-control">
+                                                <owl-date-time #dt1 [hour12Timer]="true"></owl-date-time>
                                             </div>
                                         </div>
                                     </div>
@@ -114,12 +126,15 @@
                                                     <td class="align-middle">{{ data.SubjectArea.subject }}</td>
                                                     <td class="align-middle">{{ data.question }}</td>
                                                     <td class="align-middle">
-                                                        <ul>
-                                                            <li>A. {{ data.option_a }}</li>
-                                                            <li>B. {{ data.option_b }}</li>
-                                                            <li>C. {{ data.option_c }}</li>
-                                                            <li>D. {{ data.option_d }}</li>
-                                                        </ul>
+                                                        <button type="button" class="btn btn-outline-secondary" data-toggle="collapse" data-target="#demo" (click)="toggleQuestionOption($event)">Option</button>
+                                                        <div class="collapse">
+                                                            <ul class="list-group">
+                                                                <li class="list-group-item">A. {{ data.option_a }}</li>
+                                                                <li class="list-group-item">B. {{ data.option_b }}</li>
+                                                                <li class="list-group-item">C. {{ data.option_c }}</li>
+                                                                <li class="list-group-item">D. {{ data.option_d }}</li>
+                                                            </ul>
+                                                        </div>
                                                     </td>
                                                     <td class="align-middle">{{ levels[data.level].value }}</td>
                                                     <td class="align-middle">

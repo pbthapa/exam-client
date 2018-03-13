@@ -28,6 +28,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "keycloak-js": "^3.4.3",
+    "ng-pick-datetime": "^5.2.0",
     "ng2-tree": "^2.0.0-rc.9",
     "ngx-tooltip": "0.0.9",
     "popper.js": "^1.13.0",

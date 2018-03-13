@@ -42,7 +42,9 @@ export class QuestionSetComponent implements OnInit {
       'difficultyLevels': new FormGroup({}),
       'totalTime': new FormControl(null, Validators.required),
       'totalMark': new FormControl(null, Validators.required),
-      'questionSetName': new FormControl(null, Validators.required)
+      'questionSetName': new FormControl(null, Validators.required),
+      'active': new FormControl(null, Validators.required),
+      'activeOn': new FormControl(null, Validators.required)
     });
 
     this.levels.forEach(item => {
@@ -65,8 +67,12 @@ export class QuestionSetComponent implements OnInit {
         this.questionSetForm.value['questionSetName'],
         this.questionSetForm.value['totalTime'],
         this.questionSetForm.value['totalMark'],
-        this.selectedQuestions
+        this.selectedQuestions,
+        null,
+        this.questionSetForm.value['active'],
+        this.questionSetForm.value['activeOn'],
       );
+      console.log(model);
       this._questionService.createQuestionSet(model)
         .then(response => {
           this._alertService.success("Question Set " + model.question_set_name + " saved successfully")
@@ -161,5 +167,13 @@ export class QuestionSetComponent implements OnInit {
 
   tableOnDeactivateQuestionSet(data) {
     console.log(data);
+  }
+
+  toggleQuestionOption(ev) {
+    if (ev.target['nextElementSibling']['className'] == 'collapse') {
+      ev.target['nextElementSibling']['className'] = '';
+    } else {
+      ev.target['nextElementSibling']['className'] = 'collapse';
+    }
   }
 }

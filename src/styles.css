@@ -3,6 +3,8 @@
     margin-bottom: 60px;
 } */
 
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
 .jumbotron-plain {
     background-color:transparent !important;
 }

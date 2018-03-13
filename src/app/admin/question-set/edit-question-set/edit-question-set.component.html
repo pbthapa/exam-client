@@ -1,99 +1,105 @@
 <div class="jumbotron jumbotron-fluid jumbotron-plain">
   <div class="container">
     <alert></alert>
-    <h4 class="text-info">Edit Question Set {{ qSetDetail?.question_set_name }} [Total Question Selected: {{ questions.length }}]</h4>
-    <div class="row">
-      <div class="col-lg-3">
-        <div class="form-group">
-          <label>Total Mark:</label>
-          <input type="text" class="form-control" value="{{ qSetDetail?.total_mark }}">
+    <form [formGroup]="form">
+      <h4 class="text-info">Edit Question Set {{ qSetDetail?.question_set_name }} [Total Question Selected: {{ questions.length }}]</h4>
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Total Mark:</label>
+            <input type="text" class="form-control" formControlName="totalMark">
+          </div>
         </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="form-group">
-          <label>Total Time (In Min):</label>
-          <input type="text" class="form-control" value="{{ qSetDetail?.total_time }}">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Total Time (In Min):</label>
+            <input type="text" class="form-control" formControlName="totalTime">
+          </div>
         </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="form-group">
-          <label>Active:</label>
-          <div>
-            <input type="checkbox" class="form-checkbox" value="{{ qSetDetail?.active }}">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Active:</label>
+            <div>
+              <input type="checkbox" class="form-checkbox" formControlName="active">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Active On:</label>
+            <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="form-control" formControlName="activeOn">
+            <owl-date-time #dt1 [hour12Timer]="true"></owl-date-time>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            <h6 class="text-info">Add Question</h6>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <select class="custom-select" (change)="onSubjectChangeShowQuestion($event)">
+              <option [value]="undefined">Select Subject Area</option>
+              <option *ngFor="let option of subjectList;" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            {{ data1 | json }}
+            <select class="custom-select" (change)="onQuestionChange($event)">
+              <option [value]="undefined">Select Question</option>
+              <option *ngFor="let option of questionSelectList;" [value]="option.id">
+                {{ option.question }} [{{ levels[option.level].value }}]
+              </option>
+            </select>
           </div>
         </div>
       </div>
-      <div class="col-lg-3">
-        <div class="form-group">
-          <label>Active On:</label>
-          <input type="text" class="form-control">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="form-group">
+            <table class="table table-sm table-striped">
+              <thead>
+                <th>S.No</th>
+                <th>Question</th>
+                <th>Options</th>
+                <th>Level</th>
+                <th>Action</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let q of questions; let i=index;">
+                  <td class="align-middle">{{ i+1 }}</td>
+                  <td class="align-middle">{{ q.question }}</td>
+                  <td class="align-middle">
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="collapse" data-target="#demo" (click)="toggleQuestionOption($event)">Option</button>
+                    <div class="collapse">
+                      <ul class="list-group">
+                        <li class="list-group-item">A. {{ q.option_a }}</li>
+                        <li class="list-group-item">B. {{ q.option_b }}</li>
+                        <li class="list-group-item">C. {{ q.option_c }}</li>
+                        <li class="list-group-item">D. {{ q.option_d }}</li>
+                      </ul>
+                    </div>
+                  </td>
+                  <td class="align-middle">{{ levels[q.level].value }}</td>
+                  <td class="align-middle">
+                    <button class="btn btn-outline-danger" (click)="tableOnRemoveQuestion(q.id)">
+                      <i class="fa fa-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <button (click)="onSubmit()" class="btn btn-primary">Submit</button>
+          <button (click)="onBackClickBtn()" class="btn btn-secondary">Back</button>
         </div>
       </div>
-      <div class="col-lg-12">
-        <div class="form-group">
-          <h6 class="text-info">Add Question</h6>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="form-group">
-          <select class="custom-select" (change)="onSubjectChangeShowQuestion($event)">
-            <option [value]="undefined">Select Subject Area</option>
-            <option *ngFor="let option of subjectList;" [value]="option.value">
-              {{ option.label }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="form-group">
-          {{ data1 | json }}
-          <select class="custom-select" (change)="onQuestionChange($event)">
-            <option [value]="undefined">Select Question</option>
-            <option *ngFor="let option of questionSelectList;" [value]="option.id">
-              {{ option.question }} [{{ levels[option.level].value }}]
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="form-group">
-          <table class="table table-sm table-striped">
-            <thead>
-              <th>S.No</th>
-              <th>Question</th>
-              <th>Options</th>
-              <th>Level</th>
-              <th>Action</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let q of questions; let i=index;">
-                <td class="align-middle">{{ i+1 }}</td>
-                <td class="align-middle">{{ q.question }}</td>
-                <td class="align-middle">
-                  <ul class="list-group">
-                    <li class="list-group-item">A. {{ q.option_a }}</li>
-                    <li class="list-group-item">B. {{ q.option_b }}</li>
-                    <li class="list-group-item">C. {{ q.option_c }}</li>
-                    <li class="list-group-item">D. {{ q.option_d }}</li>
-                  </ul>
-                </td>
-                <td class="align-middle">{{ levels[q.level].value }}</td>
-                <td class="align-middle">
-                  <button class="btn btn-outline-danger" (click)="tableOnRemoveQuestion(q.id)">
-                    <i class="fa fa-remove"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="col-lg-12">
-        <button (click)="onSubmit()" class="btn btn-primary">Submit</button>
-        <button (click)="onBackClickBtn()" class="btn btn-secondary">Back</button>
-      </div>
-    </div>
+    </form>
   </div>
 </div>

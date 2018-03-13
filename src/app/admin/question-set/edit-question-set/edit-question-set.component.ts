@@ -5,7 +5,7 @@ import { MultiChoiceModel } from '../../multi-choice/multi-choice-model';
 import { ExamConstants } from '../../../common/constants';
 import { DataService } from '../../../common/data.service';
 import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { SubjectAreaService } from '../../subject-area/service/subject-area.service';
 import { AlertService } from '../../../app-utils/alert/alert.service';
 
@@ -22,12 +22,19 @@ export class EditQuestionSetComponent implements OnInit {
   levels: any[] = [];
   subjectList: any[] = [];
   questionSelectList: Array<MultiChoiceModel> = [];
-  data1: any;
+  form: FormGroup;
 
   constructor(private _questionService: MultiChoiceService, private _subjectAreaService: SubjectAreaService,
     private data: DataService, private router: Router, private _alertService: AlertService) { }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      'totalTime': new FormControl(null, Validators.required),
+      'totalMark': new FormControl(null, Validators.required),
+      'questionSetName': new FormControl(null, Validators.required),
+      'active': new FormControl(null, Validators.required),
+      'activeOn': new FormControl(null, Validators.required)
+    });
     this.levels = ExamConstants.levels;
     this.getSubjectAreaList();
     this.subscriber = this.data.currentMessage.subscribe(id => {
@@ -43,6 +50,13 @@ export class EditQuestionSetComponent implements OnInit {
     this._questionService.getAllQuestionSetDetailsById(id)
       .then(x => {
         this.qSetDetail = x[0];
+        this.form.setValue({
+          totalTime: this.qSetDetail.total_time,
+          totalMark: this.qSetDetail.total_mark,
+          questionSetName: this.qSetDetail.question_set_name,
+          active: this.qSetDetail.active,
+          activeOn: this.qSetDetail.active_on
+        });
         this.questions = x[1];
       })
       .catch(error => console.log(error._body));
@@ -112,5 +126,41 @@ export class EditQuestionSetComponent implements OnInit {
   tableOnRemoveQuestion(questionId) {
     const index = this.questions.findIndex(x => x.id == questionId);
     this.questions.splice(index, 1);
+  }
+
+  onSubmit() {
+    if (this.form.valid && this.questions.length > 0) {
+      this.copyFields(this.form.value);
+      this.qSetDetail.selectedQuestionIds = [];
+      this.questions.map(data => {
+        this.qSetDetail.selectedQuestionIds.push(data.id);
+      });
+      //console.log(this.qSetDetail);
+      //push data to edit
+      this._questionService.updateQuestionSet(this.qSetDetail)
+      .then(x => {
+        console.log(x);
+        this._alertService.success("Question set updated successfully");
+      })
+      .catch(error => console.log(error));
+    } else {
+      this._alertService.warn("Please fill all the fields");
+    }
+  }
+
+  copyFields(data) {
+    this.qSetDetail.total_time = data.totalTime;
+    this.qSetDetail.total_mark = data.totalMark;
+    this.qSetDetail.active = data.active;
+    this.qSetDetail.active_on = data.activeOn;
+    this.qSetDetail.question_set_name = data.questionSetName;
+  }
+
+  toggleQuestionOption(ev) {
+    if (ev.target['nextElementSibling']['className'] == 'collapse') {
+      ev.target['nextElementSibling']['className'] = '';
+    } else {
+      ev.target['nextElementSibling']['className'] = 'collapse';
+    }
   }
 }
