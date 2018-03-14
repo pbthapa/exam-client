@@ -99,7 +99,7 @@ export class MultiChoiceService {
   }
 
   updateQuestionSet(data: QuestionSetModel) {
-    return this._http.post(this.baseUrl + '/edit-question-set', data)
+    return this._http.post(this.baseUrl + '/update-question-set', data)
     .toPromise()
     .catch(this.handleError);
   }

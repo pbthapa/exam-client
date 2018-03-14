@@ -31,7 +31,7 @@
                                     <img src="assets/images/true.png" *ngIf="data.active" style="height: 26px; width: 24px;" />
                                     <img src="assets/images/false.png" *ngIf="!data.active" style="height: 24px; width: 24px;" />
                                 </td>
-                                <td class="align-middle">{{ data.active_on }}</td>
+                                <td class="align-middle">{{ data.active_on | date:'yyyy-MM-dd HH:mm' }}</td>
                                 <td class="align-middle">
                                     <button class="btn btn-outline-success" (click)="tableOnEditQuestionSet(data)">
                                         <i class="fa fa-pencil"></i>
