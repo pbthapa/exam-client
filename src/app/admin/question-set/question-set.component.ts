@@ -72,7 +72,7 @@ export class QuestionSetComponent implements OnInit {
         this.questionSetForm.value['active'],
         this.questionSetForm.value['activeOn'],
       );
-      console.log(model);
+      //console.log(model);
       this._questionService.createQuestionSet(model)
         .then(response => {
           this._alertService.success("Question Set " + model.question_set_name + " saved successfully")
@@ -156,17 +156,18 @@ export class QuestionSetComponent implements OnInit {
       .catch(error => console.log(error._body));
   }
 
-  tableOnActivateQuestionSet(data) {
-    console.log(data);
+  tableOnRemoveQuestionSet(data) {
+    this._questionService.deleteQuestionSet(data.id)
+      .then(response => {
+        this._alertService.success("Question set deleted successfully");
+        this.getAllQuestionSetDetails();
+      })
+      .catch(error => console.log(error._body));
   }
 
   tableOnEditQuestionSet(data) {
     this.data.queryParam(data.id);
     this.router.navigate(['/admin/edit-question-set/']);
-  }
-
-  tableOnDeactivateQuestionSet(data) {
-    console.log(data);
   }
 
   toggleQuestionOption(ev) {

@@ -139,8 +139,8 @@ export class EditQuestionSetComponent implements OnInit {
       //push data to edit
       this._questionService.updateQuestionSet(this.qSetDetail)
       .then(x => {
-        console.log(x);
         this._alertService.success("Question set updated successfully");
+        this.onBackClickBtn();
       })
       .catch(error => console.log(error));
     } else {

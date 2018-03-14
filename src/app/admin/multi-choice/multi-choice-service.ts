@@ -103,4 +103,14 @@ export class MultiChoiceService {
     .toPromise()
     .catch(this.handleError);
   }
+
+  deleteQuestionSet(setId: number) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    return this._http.post(this.baseUrl + '/remove-question-set', JSON.stringify({ id: setId }), options)
+    .map(response => response.json())
+    .toPromise()
+    .catch(this.handleError);
+  }
 }
