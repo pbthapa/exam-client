@@ -52,7 +52,7 @@ export class TablePaginationComponent implements OnInit {
   }
 
   lastPage(): boolean {
-    return this.perPage * this.page > this.count;
+    return this.perPage * this.page >= this.count;
   }
 
   getPages(): number[] {

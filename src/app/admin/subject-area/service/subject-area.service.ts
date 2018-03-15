@@ -72,4 +72,13 @@ export class SubjectAreaService {
     .map(data => data.json())
     .toPromise();
   }
+
+  getSubjectAreaPagedList(data) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    return this._http.post(this.baseUrl + '/list-subject-area', JSON.stringify(data), options)
+    .map(data => data.json())
+    .toPromise();
+  }
 }

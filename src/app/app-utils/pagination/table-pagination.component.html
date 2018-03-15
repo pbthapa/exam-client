@@ -1,17 +1,37 @@
-<!-- *ngIf="count > 0" -->
-<div class="pagination">
+<!-- <div class="pagination" *ngIf="count > 0">
 	<div class="description">
-		<span class="page-counts">{{ getMin() }} - {{ getMax() }} of {{ count }}</span>
-		<span class="page-totals">{{ totalPages() }} pages</span>
+		<span class="page-counts">{{ getMin() }} - {{ getMax() }} rows of total {{ count }} records, </span>
+		<span class="page-totals">Numer of pages: {{ totalPages() }} </span>
 	</div>
 	<div class="numbers">
 		<button class="link" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }">&lt; Previous</button>
-		
-		<button
-			*ngFor="let pageNum of getPages()"
-			(click)="onPage(pageNum)"
-			[ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button>
+
+		<button *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)" [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button>
 
 		<button class="link" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">Next &gt;</button>
+	</div>
+</div> -->
+
+<div class="row" *ngIf="count > 0">
+	<div class="col-lg-6">
+		<span class="progress-bar bg-info" style="height: 40px;">
+			{{ getMin() }} - {{ getMax() }} rows of total {{ count }} records, 
+			Numer of pages: {{ totalPages() }}
+		</span>
+	</div>
+	<div class="col-lg-6">
+		<nav aria-label="table pagination" style="float:right;">
+			<ul class="pagination" *ngIf="count > 0">
+				<li class="page-item disabled" [ngClass]="{ 'page-item disabled': page === 1 || loading }">
+					<button class="page-link" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }">&lt; Previous</button>
+				</li>
+				<li class="page-item" *ngFor="let pageNum of getPages()" [ngClass]="{'page-item active': pageNum === page }">
+					<button class="page-link" (click)="onPage(pageNum)" [ngClass]="{'page-item active': pageNum === page }">{{ pageNum }}</button>
+				</li>
+				<li class="page-item" [ngClass]="{ 'page-item disabled': lastPage() || loading }">
+					<button class="page-link" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">Next &gt;</button>
+				</li>
+			</ul>
+		</nav>
 	</div>
 </div>

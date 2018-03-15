@@ -1,3 +1,4 @@
+import { PageModel } from './../../common/page.model';
 import { AlertService } from './../../app-utils/alert/alert.service';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { SubjectAreaService } from './service/subject-area.service';
@@ -14,26 +15,21 @@ export class SubjectAreaComponent implements OnInit {
 
   subjectForm: FormGroup;
   editLabel: string;
-
-  loading = false;
-  total = 0;
-  page = 1;
-  limit = 5;
+  pageModel: PageModel;
 
   goToPage(n: number): void {
-    console.log(n);
-    this.page = n;
-    //this.getSubjectAreaList();
+    this.pageModel.page = n;
+    this.getSubjectAreaList();
   }
 
   onNext(): void {
-    this.page++;
-    //this.getSubjectAreaList();
+    this.pageModel.page++;
+    this.getSubjectAreaList();
   }
 
   onPrev(): void {
-    this.page--;
-    //this.getSubjectAreaList();
+    this.pageModel.page--;
+    this.getSubjectAreaList();
   }
 
   // Table variables
@@ -61,6 +57,7 @@ export class SubjectAreaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageModel = new PageModel();
     this.setFields();
     // Table Properties initialize
     // this.tableOptions.rows = [];
@@ -110,12 +107,13 @@ export class SubjectAreaComponent implements OnInit {
   }
 
   getSubjectAreaList() {
-    this._subjectAreaService.getSubjectAreaList()
+    this._subjectAreaService.getSubjectAreaPagedList({ page: this.pageModel.page, limit: this.pageModel.limit })
       .then(response => {
-        this.data = response;
+        console.log(response);
+        this.data = response.result;
         // this.tableRows = this.data;
         // this.setTableOption();
-        this.total = response.length;
+        this.pageModel.total = response.count;
       })
       .catch(error => {
         this._alertService.error("Unable to show subject area list");

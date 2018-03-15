@@ -1,5 +1,4 @@
 import { EditQuestionSetComponent } from './question-set/edit-question-set/edit-question-set.component';
-import { AlertComponent } from './../app-utils/alert/alert.component';
 import { TreeComponent } from './../app-utils/tree/tree.component';
 import { TreeService } from './../app-utils/tree/tree.service';
 import { MultiSelectorDropdownComponent } from './../app-utils/multi-selector-dropdown/multi-selector-dropdown.component';

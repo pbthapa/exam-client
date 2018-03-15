@@ -1,48 +1,40 @@
-<div class="jumbotron jumbotron-fluid jumbotron-plain">
-  <div class="container">
-    <!-- <alert></alert> -->
-    <h4 class="text-info">Subject Area Details</h4>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubjectModal" style="margin-bottom:10px;float:right;"
-      (click)="setFields()">
-      Add Subject Area
-    </button>
-    <!-- <xtable [options]="tableOptions" (event)="onCompleteApplicationClick($event)" [refresh]="refreshTable"></xtable> -->
-    <table class="table table-sm table-striped">
-      <thead>
-        <th>S.No</th>
-        <th>Subject</th>
-        <th>Active</th>
-        <th>Action</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let subject of data; let i = index;">
-          <td class="align-middle">{{ i+1 }}</td>
-          <td class="align-middle">{{ subject.subject }}</td>
-          <td class="align-middle">
-            <img src="assets/images/true.png" *ngIf="subject.active" style="height: 26px; width: 24px;" />
-            <img src="assets/images/false.png" *ngIf="!subject.active" style="height: 24px; width: 24px;" />
-          </td>
-          <td class="align-middle">
-            <button class="btn btn-outline-success" (click)="tableOnEditSubject($event, subject)" data-toggle="modal" data-target="#addSubjectModal">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button class="btn btn-outline-danger" (click)="tableOnDeactivateSubject(subject)">
-              <i class="fa fa-remove"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    {{   total | json }}
-    {{   page | json }}
-    {{   limit | json }}
-    <table-pagination (goPage)="goToPage($event)" (goNext)="onNext()" 
-      (goPrev)="onPrev()" [pagesToShow]="3" 
-      [page]="page" [perPage]="limit"
-      [count]="total">
-    </table-pagination>
-  </div>
-</div>
+<h4 class="text-info">Subject Area Details</h4>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubjectModal" style="margin-bottom:10px;float:right;"
+  (click)="setFields()">
+  Add Subject Area
+</button>
+<!-- <xtable [options]="tableOptions" (event)="onCompleteApplicationClick($event)" [refresh]="refreshTable"></xtable> -->
+<table class="table table-sm table-striped">
+  <thead>
+    <th>S.No</th>
+    <th>Subject</th>
+    <th>Active</th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let subject of data; let i = index;">
+      <td class="align-middle">{{ (i+1) + (pageModel.limit * (pageModel.page-1)) }}</td>
+      <td class="align-middle">{{ subject.subject }}</td>
+      <td class="align-middle">
+        <img src="assets/images/true.png" *ngIf="subject.active" style="height: 26px; width: 24px;" />
+        <img src="assets/images/false.png" *ngIf="!subject.active" style="height: 24px; width: 24px;" />
+      </td>
+      <td class="align-middle">
+        <button class="btn btn-outline-success" (click)="tableOnEditSubject($event, subject)" data-toggle="modal" data-target="#addSubjectModal">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button class="btn btn-outline-danger" (click)="tableOnDeactivateSubject(subject)">
+          <i class="fa fa-remove"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table-pagination (goPage)="goToPage($event)" (goNext)="onNext()" (goPrev)="onPrev()" [pagesToShow]="5" [page]="pageModel.page" [perPage]="pageModel.limit"
+  [count]="pageModel.total">
+</table-pagination>
+
 <!-- The modal -->
 <div class="modal fade" id="addSubjectModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
   <div class="modal-dialog modal-lg">
