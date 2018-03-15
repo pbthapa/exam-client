@@ -10,10 +10,12 @@ import { AppRoutingModule } from './app.route.module';
 import { KeycloakHttp, keycloakHttpFactory } from './keycloak/keycloak.http';
 import { KeycloakService } from './keycloak/keycloak.service';
 import { DataService } from './common/data.service';
+import { AlertService } from './app-utils/alert/alert.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     BrowserModule ,
@@ -28,10 +30,11 @@ import { DataService } from './common/data.service';
     {
       provide: KeycloakHttp,
       useFactory: keycloakHttpFactory,
-      deps: [XHRBackend, RequestOptions, KeycloakService]
+      deps: [XHRBackend, RequestOptions, KeycloakService],
    },
    KeycloakService,
-   DataService
+   DataService,
+   AlertService
   ],
   exports: [],
   bootstrap: [AppComponent]

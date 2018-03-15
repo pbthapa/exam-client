@@ -5,7 +5,6 @@ import { AlertService } from './alert.service';
 import { Subscriber } from 'rxjs';
 
 @Component({
-    moduleId: module.id,
     selector: 'alert',
     templateUrl: 'alert.component.html'
 })
@@ -17,15 +16,17 @@ export class AlertComponent implements OnInit, OnDestroy {
     constructor(private alertService: AlertService) { }
 
     ngOnInit() {
-       this.data.push(this.alertService.getAlert().subscribe((alert: Alert) => {
+       this.data.push(this.alertService.getAlert()  .subscribe((alert: Alert) => {
             if (!alert) {
                 // clear alerts when an empty alert is received
                 this.alerts = [];
                 return;
+
             }
 
             // add alert to array
             this.alerts.push(alert);
+            //console.log("I am out? " + this.alerts);
         }));
     }
 

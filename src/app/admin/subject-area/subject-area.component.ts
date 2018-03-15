@@ -15,6 +15,27 @@ export class SubjectAreaComponent implements OnInit {
   subjectForm: FormGroup;
   editLabel: string;
 
+  loading = false;
+  total = 0;
+  page = 1;
+  limit = 5;
+
+  goToPage(n: number): void {
+    console.log(n);
+    this.page = n;
+    //this.getSubjectAreaList();
+  }
+
+  onNext(): void {
+    this.page++;
+    //this.getSubjectAreaList();
+  }
+
+  onPrev(): void {
+    this.page--;
+    //this.getSubjectAreaList();
+  }
+
   // Table variables
   // tableOptions: TableOptions = new TableOptions();
   // refreshTable = new EventEmitter<any>();
@@ -94,6 +115,7 @@ export class SubjectAreaComponent implements OnInit {
         this.data = response;
         // this.tableRows = this.data;
         // this.setTableOption();
+        this.total = response.length;
       })
       .catch(error => {
         this._alertService.error("Unable to show subject area list");

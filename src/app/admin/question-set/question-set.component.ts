@@ -4,18 +4,23 @@ import { ExamConstants } from './../../common/constants';
 import { MultiSelectorDropdownComponent } from './../../app-utils/multi-selector-dropdown/multi-selector-dropdown.component';
 import { MultiChoiceModel } from './../multi-choice/multi-choice-model';
 import { MultiChoiceService } from './../multi-choice/multi-choice-service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { Subject } from '../subject-area/model/subject.model';
 import { SubjectAreaService } from '../subject-area/service/subject-area.service';
 import { QuestionSetModel } from './question-set.model';
 import { DataService } from '../../common/data.service';
+import { Alert } from '../../app-utils/alert/alert';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-question-set',
   templateUrl: './question-set.component.html'
 })
-export class QuestionSetComponent implements OnInit {
+export class QuestionSetComponent implements OnInit,AfterViewInit {
+
+  
+
   questionSetForm: FormGroup;
   levels: any[] = [];
   list: any[];
@@ -25,15 +30,58 @@ export class QuestionSetComponent implements OnInit {
   showContainer: boolean = false;
   @ViewChild(MultiSelectorDropdownComponent) multiSelect: MultiSelectorDropdownComponent;
   qsetModels: QuestionSetModel[] = [];
+  tmp :any = "";
+  subscriber:Subscription;
 
   constructor(private _fb: FormBuilder, private _subjectAreaService: SubjectAreaService,
     private _questionService: MultiChoiceService, private _alertService: AlertService,
     private router: Router, private data: DataService) {
-  }
+     
+}
 
   ngOnInit() {
+    
     this.setFields();
     this.getAllQuestionSetDetails();
+    console.log("ng on init");
+    let self = this;
+
+
+  // });
+  // this._alertService.success('hello');
+//   this.subscriber=this._alertService.getAlert().subscribe((alert: Alert) => {
+//     console.log("ng on init"+alert);
+    
+//     if(alert != null) {
+//       console.log("ng on init"+alert.message);
+//     // self.tmp = alert.message;      
+//     this._alertService.success(alert.message);
+      
+//     } 
+// })
+  }
+
+  ngOnDestroy(){
+    console.log('destroyed');
+    // this.subscriber.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+//     this.subscriber=this._alertService.getAlert().subscribe((alert: Alert) => {
+//       console.log("ng on init"+alert);
+      
+//       if(alert != null) {
+//         console.log("ng on init"+alert.message);
+//       // self.tmp = alert.message;      
+//       this._alertService.success(alert.message);
+        
+//       } 
+// })
+    console.log("ng view init" +this.tmp);   
+    if(this.tmp != ""){
+     
+    }
+  
   }
 
   setFields() {

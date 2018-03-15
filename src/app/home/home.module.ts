@@ -7,6 +7,8 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home.route.module';
+import { AlertComponent } from '../app-utils/alert/alert.component';
+import { AlertService } from '../app-utils/alert/alert.service';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { HomeRoutingModule } from './home.route.module';
     HomeComponent,
     DashboardComponent,
     HeaderComponent,
-    FooterComponent
-   ]
+    FooterComponent,
+    AlertComponent
+   ],
+  //  providers:[AlertService]
 })
 export class HomeModule { }

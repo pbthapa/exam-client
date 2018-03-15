@@ -1,6 +1,5 @@
 import { EditQuestionSetComponent } from './question-set/edit-question-set/edit-question-set.component';
 import { AlertComponent } from './../app-utils/alert/alert.component';
-import { AlertService } from './../app-utils/alert/alert.service';
 import { TreeComponent } from './../app-utils/tree/tree.component';
 import { TreeService } from './../app-utils/tree/tree.service';
 import { MultiSelectorDropdownComponent } from './../app-utils/multi-selector-dropdown/multi-selector-dropdown.component';
@@ -23,6 +22,7 @@ import { AdminComponent } from './admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuestionSetComponent } from './question-set/question-set.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TablePaginationComponent } from '../app-utils/pagination/table-pagination.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +34,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     QuestionSetComponent,
     MultiSelectorDropdownComponent,
     TreeComponent,
-    AlertComponent,
-    EditQuestionSetComponent
+    EditQuestionSetComponent,
+    TablePaginationComponent
   ],
   imports: [
     SharedModule,
@@ -54,7 +54,6 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     SubjectAreaService,
     DataLoaderService,
     TreeService,
-    AlertService
   ],
   exports: [
     TableComponent

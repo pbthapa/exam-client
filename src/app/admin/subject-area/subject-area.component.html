@@ -1,9 +1,9 @@
 <div class="jumbotron jumbotron-fluid jumbotron-plain">
   <div class="container">
-    <alert></alert>
+    <!-- <alert></alert> -->
     <h4 class="text-info">Subject Area Details</h4>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubjectModal" 
-      style="margin-bottom:10px;float:right;" (click)="setFields()">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubjectModal" style="margin-bottom:10px;float:right;"
+      (click)="setFields()">
       Add Subject Area
     </button>
     <!-- <xtable [options]="tableOptions" (event)="onCompleteApplicationClick($event)" [refresh]="refreshTable"></xtable> -->
@@ -33,6 +33,14 @@
         </tr>
       </tbody>
     </table>
+    {{   total | json }}
+    {{   page | json }}
+    {{   limit | json }}
+    <table-pagination (goPage)="goToPage($event)" (goNext)="onNext()" 
+      (goPrev)="onPrev()" [pagesToShow]="3" 
+      [page]="page" [perPage]="limit"
+      [count]="total">
+    </table-pagination>
   </div>
 </div>
 <!-- The modal -->

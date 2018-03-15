@@ -7,25 +7,26 @@ import { Alert, AlertType } from './alert';
 
 @Injectable()
 export class AlertService {
-    private subject = new Subject<Alert>();
+    private subject:Subject<Alert>
     private keepAfterRouteChange = false;
 
     constructor(private router: Router) {
+        this.subject= new Subject<Alert>();
         // clear alert messages on route change unless 'keepAfterRouteChange' flag is true
-        router.events.subscribe(event => {
-            if (event instanceof NavigationStart) {
-                if (this.keepAfterRouteChange) {
-                    // only keep for a single route change
-                    this.keepAfterRouteChange = false;
-                } else {
-                    // clear alert messages
-                    this.clear();
-                }
-            }
-        });
+        // router.events.subscribe(event => {
+        //     if (event instanceof NavigationStart) {
+        //         if (this.keepAfterRouteChange) {
+        //             // only keep for a single route change
+        //             this.keepAfterRouteChange = false;
+        //         } else {
+        //             // clear alert messages
+        //             this.clear();
+        //         }
+        //     }
+        // });
     }
 
-    getAlert(): Observable<any> {
+    getAlert(): Observable<Alert> {
         return this.subject.asObservable();
     }
 
@@ -46,7 +47,7 @@ export class AlertService {
     }
 
     alert(type: AlertType, message: string, keepAfterRouteChange = false) {
-        this.keepAfterRouteChange = keepAfterRouteChange;
+            // this.keepAfterRouteChange = keepAfterRouteChange;
         this.subject.next(<Alert>{ type: type, message: message });
     }
 

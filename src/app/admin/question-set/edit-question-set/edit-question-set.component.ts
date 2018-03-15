@@ -140,9 +140,10 @@ export class EditQuestionSetComponent implements OnInit {
       this._questionService.updateQuestionSet(this.qSetDetail)
       .then(x => {
         this._alertService.success("Question set updated successfully");
-        this.onBackClickBtn();
+        // this._alertService.success(alert.message);
+        this.router.navigate(['/admin/prepare-question-set']);
       })
-      .catch(error => console.log(error));
+      .catch(error => { console.log(error); });
     } else {
       this._alertService.warn("Please fill all the fields");
     }
