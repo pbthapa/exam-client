@@ -9,6 +9,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home.route.module';
 import { AlertComponent } from '../app-utils/alert/alert.component';
 import { AlertService } from '../app-utils/alert/alert.service';
+import { ClockComponent } from '../app-utils/clock/clock.component';
+import { ExamComponent } from '../admin/exam/exam.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import { AlertService } from '../app-utils/alert/alert.service';
     DashboardComponent,
     HeaderComponent,
     FooterComponent,
-    AlertComponent
+    AlertComponent,
+    ClockComponent,
+    ExamComponent
    ],
   //  providers:[AlertService]
 })

@@ -11,6 +11,7 @@ import { KeycloakHttp, keycloakHttpFactory } from './keycloak/keycloak.http';
 import { KeycloakService } from './keycloak/keycloak.service';
 import { DataService } from './common/data.service';
 import { AlertService } from './app-utils/alert/alert.service';
+import { ClockService } from './app-utils/clock/clock.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AlertService } from './app-utils/alert/alert.service';
    },
    KeycloakService,
    DataService,
-   AlertService
+   AlertService,
+   ClockService
   ],
   exports: [],
   bootstrap: [AppComponent]

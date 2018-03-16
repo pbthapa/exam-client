@@ -81,4 +81,13 @@ export class SubjectAreaService {
     .map(data => data.json())
     .toPromise();
   }
+
+  /**
+   * TODO: Need to move this after actual implementation
+   */
+  prepareExam() {
+    return this._http.post(this.baseUrl + '/start-exam', null)
+    .map(data => data.json())
+    .toPromise();
+  }
 }

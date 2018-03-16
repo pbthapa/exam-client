@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SubjectAreaComponent } from './subject-area/subject-area.component';
 import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { AdminComponent } from './admin.component';
+import { ExamComponent } from './exam/exam.component';
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { AdminComponent } from './admin.component';
                         { path: 'subject', component: SubjectAreaComponent },
                         { path: 'multi-choice', component: MultiChoiceComponent },
                         { path: 'prepare-question-set', component: QuestionSetComponent },
-                        { path: 'edit-question-set', component: EditQuestionSetComponent }
+                        { path: 'edit-question-set', component: EditQuestionSetComponent },
+                        { path: 'exam', component: ExamComponent }
                 ]
             }
         ])
