@@ -40,6 +40,9 @@
                     </tr>
                 </tbody>
             </table>
+            <table-pagination (goPage)="goToPage($event)" (goNext)="onNext()" (goPrev)="onPrev()" [pagesToShow]="5" [page]="pageModel.page" [perPage]="pageModel.limit"
+                [count]="pageModel.total">
+            </table-pagination>
         </div>
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" aria-expanded="false">
             <form [formGroup]="questionSetForm">

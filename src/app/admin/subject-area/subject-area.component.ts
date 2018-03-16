@@ -109,7 +109,6 @@ export class SubjectAreaComponent implements OnInit {
   getSubjectAreaList() {
     this._subjectAreaService.getSubjectAreaPagedList({ page: this.pageModel.page, limit: this.pageModel.limit })
       .then(response => {
-        console.log(response);
         this.data = response.result;
         // this.tableRows = this.data;
         // this.setTableOption();

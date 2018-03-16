@@ -82,7 +82,7 @@ export class MultiChoiceService {
   }
 
   getAllQuestionSetDetails() {
-    return this._http.get(this.baseUrl + '/list-question-set')
+    return this._http.get(this.baseUrl + '/all-question-set')
     .map(response => response.json())
     .toPromise()
     .catch(this.handleError);
@@ -112,5 +112,14 @@ export class MultiChoiceService {
     .map(response => response.json())
     .toPromise()
     .catch(this.handleError);
+  }
+
+  getAllPagedQuestionSetDetails(data) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    return this._http.post(this.baseUrl + '/list-question-set', JSON.stringify(data), options)
+    .map(data => data.json())
+    .toPromise();
   }
 }

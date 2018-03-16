@@ -12,14 +12,13 @@ import { QuestionSetModel } from './question-set.model';
 import { DataService } from '../../common/data.service';
 import { Alert } from '../../app-utils/alert/alert';
 import { Subscription } from 'rxjs';
+import { PageModel } from '../../common/page.model';
 
 @Component({
   selector: 'app-question-set',
   templateUrl: './question-set.component.html'
 })
-export class QuestionSetComponent implements OnInit,AfterViewInit {
-
-  
+export class QuestionSetComponent implements OnInit {
 
   questionSetForm: FormGroup;
   levels: any[] = [];
@@ -30,8 +29,7 @@ export class QuestionSetComponent implements OnInit,AfterViewInit {
   showContainer: boolean = false;
   @ViewChild(MultiSelectorDropdownComponent) multiSelect: MultiSelectorDropdownComponent;
   qsetModels: QuestionSetModel[] = [];
-  tmp :any = "";
-  subscriber:Subscription;
+  pageModel: PageModel;
 
   constructor(private _fb: FormBuilder, private _subjectAreaService: SubjectAreaService,
     private _questionService: MultiChoiceService, private _alertService: AlertService,
@@ -40,48 +38,9 @@ export class QuestionSetComponent implements OnInit,AfterViewInit {
 }
 
   ngOnInit() {
-    
+    this.pageModel = new PageModel();
     this.setFields();
     this.getAllQuestionSetDetails();
-    console.log("ng on init");
-    let self = this;
-
-
-  // });
-  // this._alertService.success('hello');
-//   this.subscriber=this._alertService.getAlert().subscribe((alert: Alert) => {
-//     console.log("ng on init"+alert);
-    
-//     if(alert != null) {
-//       console.log("ng on init"+alert.message);
-//     // self.tmp = alert.message;      
-//     this._alertService.success(alert.message);
-      
-//     } 
-// })
-  }
-
-  ngOnDestroy(){
-    console.log('destroyed');
-    // this.subscriber.unsubscribe();
-  }
-
-  ngAfterViewInit(): void {
-//     this.subscriber=this._alertService.getAlert().subscribe((alert: Alert) => {
-//       console.log("ng on init"+alert);
-      
-//       if(alert != null) {
-//         console.log("ng on init"+alert.message);
-//       // self.tmp = alert.message;      
-//       this._alertService.success(alert.message);
-        
-//       } 
-// })
-    console.log("ng view init" +this.tmp);   
-    if(this.tmp != ""){
-     
-    }
-  
   }
 
   setFields() {
@@ -199,8 +158,11 @@ export class QuestionSetComponent implements OnInit,AfterViewInit {
   }
 
   getAllQuestionSetDetails() {
-    this._questionService.getAllQuestionSetDetails()
-      .then(response => { this.qsetModels = response; })
+    this._questionService.getAllPagedQuestionSetDetails({ page: this.pageModel.page, limit: this.pageModel.limit })
+      .then(response => { 
+        this.qsetModels = response.result;
+        this.pageModel.total = response.count;
+      })
       .catch(error => console.log(error._body));
   }
 
@@ -224,5 +186,20 @@ export class QuestionSetComponent implements OnInit,AfterViewInit {
     } else {
       ev.target['nextElementSibling']['className'] = 'collapse';
     }
+  }
+
+  goToPage(n: number): void {
+    this.pageModel.page = n;
+    this.getAllQuestionSetDetails();
+  }
+
+  onNext(): void {
+    this.pageModel.page++;
+    this.getAllQuestionSetDetails();
+  }
+
+  onPrev(): void {
+    this.pageModel.page--;
+    this.getAllQuestionSetDetails();
   }
 }
