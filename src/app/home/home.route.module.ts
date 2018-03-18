@@ -5,9 +5,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
     {
-        path: '', component: HomeComponent,
+        path: 'dashboard', component: HomeComponent,
         children: [
-            { path: '', component: DashboardComponent, pathMatch: 'full' },
+            { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
             { path: 'admin', loadChildren: '../admin/admin.module#AdminModule' }
         ]
     }

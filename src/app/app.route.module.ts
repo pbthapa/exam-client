@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
@@ -6,7 +7,8 @@ import { Router } from '@angular/router';
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            { path: '', loadChildren: './home/home.module#HomeModule' }
+            { path: 'dashboard', loadChildren: './home/home.module#HomeModule' },
+            { path: 'login', component: LoginComponent, pathMatch: "full" }
         ])
     ],
     exports: [RouterModule]

@@ -1,0 +1,29 @@
+<div class="container card form-signin">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well">
+                <form [formGroup]="form">
+                    <img src="assets/images/user.png" class="rounded mx-auto d-block" alt="user" width="120" height="120" />
+                    <h3 class="text-center">Online Examination Login</h3>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" formControlName="username" class="form-control" />
+                        <span class="error-msg" *ngIf="!form.get('username').valid && form.get('username').touched">
+                            <span *ngIf="form.get('username').errors['required']">Username is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" formControlName="password" class="form-control" />
+                        <span class="error-msg" *ngIf="!form.get('password').valid && form.get('password').touched">
+                                <span *ngIf="form.get('password').errors['required']">Password is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="!form.valid" class="btn btn-primary" (click)="onLogin()">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
