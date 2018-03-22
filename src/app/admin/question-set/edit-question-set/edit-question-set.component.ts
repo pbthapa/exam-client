@@ -97,7 +97,7 @@ export class EditQuestionSetComponent implements OnInit {
 
   getSubjectAreaList() {
     this._subjectAreaService.getSubjectAreaSelectList()
-      .then(response => { this.subjectList = response; })
+      .then(response => { this.subjectList = response['test']; })
       .catch(error => {
         this._alertService.error("Unable to show the subject list");
         console.log(error._body);

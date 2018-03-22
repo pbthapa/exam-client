@@ -9,7 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, private kc: KeycloakService) { }
+  // , private kc: KeycloakService (NOTE: keycloak service not injected)
+  constructor(private route: ActivatedRoute, private router: Router) { }
   // menus = [
   //   { route: 'admin/subject', title_a: 'Subject', title_b: 'Area', description: 'Subject Area' },
   //   { route: 'admin/multi-choice', title_a: 'Question', title_b: 'Question', description: 'Question Preparation' }

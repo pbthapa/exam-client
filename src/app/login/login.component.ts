@@ -22,8 +22,10 @@ export class LoginComponent implements OnInit {
     }
 
     onLogin() {
-        console.log(this.form.value);
-        this._authService.login(this.form.value);
-        this._router.navigate(['dashboard']);
+        this._authService.login(this.form.value)
+        .then(data => {
+            this._router.navigate(['dashboard']);
+        })
+        .catch(error => { console.log("Error has occured" + error)});
     }
 }

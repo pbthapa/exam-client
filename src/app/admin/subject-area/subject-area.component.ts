@@ -109,10 +109,10 @@ export class SubjectAreaComponent implements OnInit {
   getSubjectAreaList() {
     this._subjectAreaService.getSubjectAreaPagedList({ page: this.pageModel.page, limit: this.pageModel.limit })
       .then(response => {
-        this.data = response.result;
+        this.data = response['result'];
         // this.tableRows = this.data;
         // this.setTableOption();
-        this.pageModel.total = response.count;
+        this.pageModel.total = response['count'];
       })
       .catch(error => {
         this._alertService.error("Unable to show subject area list");

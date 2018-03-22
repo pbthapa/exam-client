@@ -15,7 +15,7 @@ import { DataService } from './common/data.service';
 import { AlertService } from './app-utils/alert/alert.service';
 import { ClockService } from './app-utils/clock/clock.service';
 import { AuthService } from './login/auth.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     FormsModule, 
     HomeModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [
     /** NOTE: Keycloak implementation is commented */

@@ -1,84 +1,55 @@
 import { Injectable } from '@angular/core';
 import { Subject } from '../model/subject.model';
-import { Headers, Http, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
-import { KeycloakHttp } from '../../../keycloak/keycloak.http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class SubjectAreaService {
 
   public baseUrl = '/api/admin';
 
-  //constructor(private _http: KeycloakHttp) { }
-  constructor(private _http: Http) { }
+  constructor(private _httpClient: HttpClient) { }
 
   create(subject: Subject) {
-    return this._http.post(this.baseUrl + '/create-subject-area', subject)
-    // .map(data => {
-    //   alert(data);
-    //   data.json();
-    // })
+    return this._httpClient.post(this.baseUrl + '/create-subject-area', subject)
     .toPromise();
   }
 
   update(subject: Subject) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
-    return this._http.put(this.baseUrl + '/update-subject-area', JSON.stringify(subject), options)
-    // .map(data => {
-    //   alert(data);
-    //   data.json();
-    // })
-    .toPromise()
-    .catch(this.handleError);
-  }
-
-  delete(id: number) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
-    return this._http.put(this.baseUrl + '/remove-subject-area', JSON.stringify({"id": id}), options)
-    .map(data => data.json())
+    return this._httpClient.put(this.baseUrl + '/update-subject-area', JSON.stringify(subject))
     .toPromise();
   }
 
-  getSubjectAreaList() {
-    return this._http.get(this.baseUrl + '/all-subject-area')
-    .map(data => data.json())
+  delete(id: number) {
+    return this._httpClient.put(this.baseUrl + '/remove-subject-area', JSON.stringify({"id": id}))
+    .toPromise();
+  }
+
+  getSubjectAreaList(): Promise<any> {
+    return this._httpClient.get(this.baseUrl + '/all-subject-area')
     .toPromise();
   }
 
   getSubjectArea(id: number) {
-    return this._http.get(this.baseUrl + '/subject-area' + id)
-    .map(data => data.json())
+    return this._httpClient.get(this.baseUrl + '/subject-area' + id)
     .toPromise();
   }
 
   private handleError(error: any): Promise<any> {
-    //console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
 
-  getSubjectAreaSelectList() {
-    return this._http.get(this.baseUrl + '/select-subjects')
-    .map(data => data.json())
+  getSubjectAreaSelectList(): Promise<any> {
+    return this._httpClient.get(this.baseUrl + '/select-subjects')
     .toPromise();
   }
 
-  getSubjectAreaActiveList() {
-    return this._http.get(this.baseUrl + '/select-subjects')
-    .map(data => data.json())
+  getSubjectAreaActiveList(): Promise<any> {
+    return this._httpClient.get(this.baseUrl + '/select-subjects')
     .toPromise();
   }
 
-  getSubjectAreaPagedList(data) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
-    return this._http.post(this.baseUrl + '/list-subject-area', JSON.stringify(data), options)
-    .map(data => data.json())
+  getSubjectAreaPagedList(data): Promise<any> {
+    return this._httpClient.post(this.baseUrl + '/list-subject-area', JSON.stringify(data))
     .toPromise();
   }
 
@@ -86,8 +57,8 @@ export class SubjectAreaService {
    * TODO: Need to move this after actual implementation
    */
   prepareExam() {
-    return this._http.post(this.baseUrl + '/start-exam', null)
-    .map(data => data.json())
-    .toPromise();
+    // return this._httpClient.post(this.baseUrl + '/start-exam', null)
+    // .toPromise();
+    return null;
   }
 }

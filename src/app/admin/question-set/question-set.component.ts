@@ -96,7 +96,9 @@ export class QuestionSetComponent implements OnInit {
 
   getSubjectAreaSelectList() {
     this._subjectAreaService.getSubjectAreaSelectList()
-      .then(response => this.list = response)
+      .then(response => {
+        this.list = response;
+      })
       .catch(error => console.log(error._body));
   }
 
